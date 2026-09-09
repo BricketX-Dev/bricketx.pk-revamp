@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, MouseEvent } from "react";
+import { useState, useEffect, useRef, MouseEvent } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -18,7 +18,9 @@ import {
   ArrowUpRight, 
   Terminal, 
   Activity,
-  ShieldCheck
+  ShieldCheck,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 
 if (typeof window !== "undefined") {
@@ -26,78 +28,64 @@ if (typeof window !== "undefined") {
 }
 
 const systems = [
-  {
-    id: "01",
-    name: "Investor Portal",
-    desc: "The dashboard investors log into to track holdings and returns.",
-    icon: MonitorSmartphone,
-  },
-  {
-    id: "02",
-    name: "Web Platforms",
-    desc: "The public sites and applications across the ecosystem.",
-    icon: Network,
-  },
-  {
-    id: "03",
-    name: "AI Systems",
-    desc: "Models and assistants that automate research and support.",
-    icon: Cpu,
-  },
-  {
-    id: "04",
-    name: "CRM Solutions",
-    desc: "Systems that manage investor and partner relationships.",
-    icon: Database,
-  },
-  {
-    id: "05",
-    name: "Dashboards",
-    desc: "Live reporting views for teams and stakeholders.",
-    icon: LineChart,
-  },
-  {
-    id: "06",
-    name: "Automations",
-    desc: "Workflows that remove manual, repetitive work.",
-    icon: Workflow,
-  },
-  {
-    id: "07",
-    name: "Marketing Funnels",
-    desc: "The paths that turn interest into qualified investors.",
-    icon: Filter,
-  },
-  {
-    id: "08",
-    name: "Reporting Systems",
-    desc: "Structured, auditable performance and compliance reporting.",
-    icon: FileSearch,
-  },
-  {
-    id: "09",
-    name: "Brand Guidelines",
-    desc: "The rules that keep every touchpoint consistent.",
-    icon: Paintbrush,
-  },
-  {
-    id: "10",
-    name: "Operational Systems",
-    desc: "The internal tooling that runs day-to-day execution.",
-    icon: TerminalSquare,
-  },
+  { id: "01", name: "Investor Portal", desc: "The dashboard investors log into to track holdings and returns.", icon: MonitorSmartphone },
+  { id: "02", name: "Web Platforms", desc: "The public sites and applications across the ecosystem.", icon: Network },
+  { id: "03", name: "AI Systems", desc: "Models and assistants that automate research and support.", icon: Cpu },
+  { id: "04", name: "CRM Solutions", desc: "Systems that manage investor and partner relationships.", icon: Database },
+  { id: "05", name: "Dashboards", desc: "Live reporting views for teams and stakeholders.", icon: LineChart },
+  { id: "06", name: "Automations", desc: "Workflows that remove manual, repetitive work.", icon: Workflow },
+  { id: "07", name: "Marketing Funnels", desc: "The paths that turn interest into qualified investors.", icon: Filter },
+  { id: "08", name: "Reporting Systems", desc: "Structured, auditable performance and compliance reporting.", icon: FileSearch },
+  { id: "09", name: "Brand Guidelines", desc: "The rules that keep every touchpoint consistent.", icon: Paintbrush },
+  { id: "10", name: "Operational Systems", desc: "The internal tooling that runs day-to-day execution.", icon: TerminalSquare },
 ];
 
 export default function WhatWeBuild() {
   const container = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
   const bgSvgSlowRef = useRef<SVGGElement>(null);
   const bgSvgFastRef = useRef<SVGGElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [cardsToShow, setCardsToShow] = useState(3);
+  const [isHovered, setIsHovered] = useState(false);
 
   const xToSlow = useRef<gsap.QuickToFunc | null>(null);
   const yToSlow = useRef<gsap.QuickToFunc | null>(null);
   const xToFast = useRef<gsap.QuickToFunc | null>(null);
   const yToFast = useRef<gsap.QuickToFunc | null>(null);
+
+  // Responsive Carousel Logic
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) setCardsToShow(1);
+      else if (window.innerWidth < 1024) setCardsToShow(2);
+      else setCardsToShow(3);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // 5-Second Auto-Advance Timer
+  useEffect(() => {
+    if (isHovered) return;
+    const maxIndex = systems.length - cardsToShow;
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [cardsToShow, isHovered]);
+
+  const handleNext = () => {
+    const maxIndex = systems.length - cardsToShow;
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  };
+
+  const handlePrev = () => {
+    const maxIndex = systems.length - cardsToShow;
+    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+  };
 
   useGSAP(() => {
     if (bgSvgSlowRef.current && bgSvgFastRef.current) {
@@ -142,18 +130,17 @@ export default function WhatWeBuild() {
     );
 
     gsap.fromTo(
-      ".system-card",
-      { y: 30, opacity: 0 },
+      trackRef.current,
+      { y: 40, opacity: 0 },
       {
         y: 0,
         opacity: 1,
-        duration: 0.6,
-        stagger: 0.05,
+        duration: 0.8,
         ease: "power2.out",
         clearProps: "opacity,transform",
         scrollTrigger: {
-          trigger: gridRef.current,
-          start: "top 85%",
+          trigger: container.current,
+          start: "top 75%",
         },
       }
     );
@@ -253,8 +240,8 @@ export default function WhatWeBuild() {
 
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
         
-        {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-8">
+        {/* Section Header & Carousel Controls */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-8">
           <div className="max-w-2xl mt-12 md:mt-0">
             <div className="build-header-item inline-flex items-center gap-2 px-3.5 py-1.5 mb-4 rounded-md border border-[#C39967]/40 bg-[#C39967]/10 text-xs font-mono font-semibold text-[#C39967] uppercase tracking-widest">
               <Terminal size={13} />
@@ -265,58 +252,96 @@ export default function WhatWeBuild() {
               <span className="text-[#C39967]">Systems.</span>
             </h2>
           </div>
-          <p className="build-header-item text-sm md:text-base text-zinc-400 max-w-md font-light leading-relaxed">
-            The infrastructure that runs the BricketX ecosystem end to end.
-          </p>
+          
+          <div className="build-header-item flex items-center justify-between lg:justify-end gap-6 w-full lg:w-auto">
+            <p className="text-sm text-zinc-400 max-w-xs font-light leading-relaxed hidden sm:block">
+              The infrastructure that runs the BricketX ecosystem end to end.
+            </p>
+            
+            {/* Terminal Style Navigation Controls */}
+            <div className="flex items-center gap-3">
+              <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mr-2">
+                [{String(currentIndex + 1).padStart(2, '0')} / {String(systems.length - cardsToShow + 1).padStart(2, '0')}]
+              </div>
+              <button 
+                onClick={handlePrev}
+                className="w-10 h-10 rounded-full border border-zinc-700 bg-zinc-900/80 flex items-center justify-center hover:bg-[#C39967] hover:text-black hover:border-[#C39967] transition-all"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button 
+                onClick={handleNext}
+                className="w-10 h-10 rounded-full border border-zinc-700 bg-zinc-900/80 flex items-center justify-center hover:bg-[#C39967] hover:text-black hover:border-[#C39967] transition-all"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* 10-Card Responsive Grid */}
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {systems.map((system) => {
-            const Icon = system.icon;
+        {/* Carousel Track Wrapper */}
+        <div 
+          className="relative w-full overflow-hidden -mx-3 px-3 py-4"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div 
+            ref={trackRef}
+            className="flex transition-transform duration-700 ease-in-out will-change-transform"
+            style={{ 
+              transform: `translateX(-${currentIndex * (100 / cardsToShow)}%)` 
+            }}
+          >
+            {systems.map((system) => {
+              const Icon = system.icon;
 
-            return (
-              <div
-                key={system.id}
-                onMouseMove={handleCardMouseMove}
-                className="system-card group relative p-7 rounded-2xl bg-zinc-900/50 border border-zinc-800/90 backdrop-blur-md shadow-xl flex flex-col justify-between overflow-hidden transition-all duration-300 hover:border-[#C39967]/60 hover:bg-zinc-900/80"
-                style={{
-                  background: `radial-gradient(350px circle at var(--mouse-x, 150px) var(--mouse-y, 100px), rgba(195, 153, 103, 0.12), transparent 80%), rgba(24, 24, 27, 0.45)`,
-                }}
-              >
-                <div>
-                  <div className="flex items-center justify-between font-mono text-xs text-zinc-400 pb-4 mb-5 border-b border-zinc-800/70">
-                    <span className="text-[#C39967] font-bold">NODE // {system.id}</span>
-                    <span className="text-[10px] uppercase font-mono font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/25 flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      Active
-                    </span>
-                  </div>
+              return (
+                <div 
+                  key={system.id} 
+                  className="w-full md:w-1/2 lg:w-1/3 shrink-0 px-3 flex"
+                >
+                  <div
+                    onMouseMove={handleCardMouseMove}
+                    className="system-card w-full group relative p-7 rounded-2xl bg-zinc-900/50 border border-zinc-800/90 backdrop-blur-md shadow-xl flex flex-col justify-between overflow-hidden transition-all duration-300 hover:border-[#C39967]/60 hover:bg-zinc-900/80"
+                    style={{
+                      background: `radial-gradient(350px circle at var(--mouse-x, 150px) var(--mouse-y, 100px), rgba(195, 153, 103, 0.12), transparent 80%), rgba(24, 24, 27, 0.45)`,
+                    }}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between font-mono text-xs text-zinc-400 pb-4 mb-5 border-b border-zinc-800/70">
+                        <span className="text-[#C39967] font-bold">NODE // {system.id}</span>
+                        <span className="text-[10px] uppercase font-mono font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/25 flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          Active
+                        </span>
+                      </div>
 
-                  <div className="flex items-start justify-between gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-[#C39967] shrink-0 group-hover:bg-[#C39967] group-hover:text-black transition-colors duration-300">
-                      <Icon size={22} />
+                      <div className="flex items-start justify-between gap-4 mb-4">
+                        <div className="w-12 h-12 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-[#C39967] shrink-0 group-hover:bg-[#C39967] group-hover:text-black transition-colors duration-300">
+                          <Icon size={22} />
+                        </div>
+                        <div className="w-7 h-7 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white group-hover:border-[#C39967] transition-all shrink-0">
+                          <ArrowUpRight size={14} />
+                        </div>
+                      </div>
+
+                      <h3 className="text-xl font-bold text-white tracking-tight mb-2 group-hover:text-[#C39967] transition-colors">
+                        {system.name}
+                      </h3>
+
+                      <p className="text-xs md:text-sm text-zinc-400 leading-relaxed font-light">
+                        {system.desc}
+                      </p>
                     </div>
-                    <div className="w-7 h-7 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white group-hover:border-[#C39967] transition-all shrink-0">
-                      <ArrowUpRight size={14} />
-                    </div>
                   </div>
-
-                  <h3 className="text-xl font-bold text-white tracking-tight mb-2 group-hover:text-[#C39967] transition-colors">
-                    {system.name}
-                  </h3>
-
-                  <p className="text-xs md:text-sm text-zinc-400 leading-relaxed font-light">
-                    {system.desc}
-                  </p>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
         {/* Footer */}
-        <div className="mt-16 pt-6 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-400">
+        <div className="mt-12 pt-6 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-400">
           <span className="flex items-center gap-2">
             <Activity size={13} className="text-[#C39967]" />
             CENTRAL KARACHI LAB // 10 ACTIVE HARDWARE NODES
