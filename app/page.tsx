@@ -6,7 +6,6 @@ import GlobalNetwork from "@/components/GlobalNetwork";
 import Company from "@/components/Company";
 import Careers from "@/components/Careers";
 import ContactTerminal from "@/components/ContactTerminal";
-import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -35,7 +34,6 @@ export default function Home() {
       {/* 8. Light (Contrast Break 2): Minimalist Inquiry Gateway */}
       <ContactTerminal/>
       {/* 9. Dark: Terminal Footer */}
-      <Footer />
     </main>
   );
 }
