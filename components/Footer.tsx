@@ -12,6 +12,15 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+const footerLinks = [
+  { name: "Homepage Core", href: "/" },
+  { name: "Departments", href: "/departments" },
+  { name: "What We Build", href: "/what-we-build" },
+  { name: "The Company", href: "/company" },
+  { name: "Culture & Careers", href: "/careers" },
+  { name: "Contact Hub", href: "/contact" },
+];
+
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
   const svgRef = useRef<SVGGElement>(null);
@@ -107,7 +116,7 @@ export default function Footer() {
                   alt="BricketX Logo" 
                   width={36} 
                   height={36} 
-                  className="object-contain"
+                  className="object-contain group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div className="flex flex-col">
@@ -139,13 +148,13 @@ export default function Footer() {
               Index
             </h4>
             <nav className="flex flex-col gap-3">
-              {['Departments', 'What We Build', 'Global Mesh', 'The Company', 'Culture & Careers'].map((item) => (
+              {footerLinks.map((link) => (
                 <Link 
-                  key={item} 
-                  href={`#${item.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
+                  key={link.name} 
+                  href={link.href}
                   className="footer-reveal group flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors w-fit"
                 >
-                  <span>{item}</span>
+                  <span>{link.name}</span>
                   <ArrowUpRight size={12} className="opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300 text-[#C39967]" />
                 </Link>
               ))}

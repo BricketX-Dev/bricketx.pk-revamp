@@ -73,7 +73,7 @@ export default function Hero() {
       "-=0.6"
     );
 
-    // 4. Cinematic Parallax Exit
+    // 4. Cinematic Parallax Exit (Optimized blur and translation)
     const exitTl = gsap.timeline({
       scrollTrigger: {
         trigger: container.current,
@@ -84,24 +84,24 @@ export default function Hero() {
     });
 
     exitTl
-      // Front Content: Accelerates upward and blurs out
+      // Front Content: Controlled upward travel and clean fade
       .to(contentRef.current, {
-        y: -150,
+        y: -100,
         opacity: 0,
-        filter: "blur(10px)",
+        filter: "blur(2px)",
         ease: "none",
       }, 0)
       
       // Footer Telemetry: Drops downward off-screen
       .to(".hero-footer-telemetry", {
-        y: 50,
+        y: 40,
         opacity: 0,
         ease: "none",
       }, 0)
       
-      // Video Background: Parallax push down & fade to black
+      // Video Background: Parallax push down & fade
       .to(videoRef.current, {
-        yPercent: 25, 
+        yPercent: 20, 
         opacity: 0.1,
         ease: "none",
       }, 0);
@@ -157,10 +157,10 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0b] via-transparent to-[#0a0a0b]/60 z-10" />
       </div>
 
-      {/* Top Navbar Spacer to prevent content from hiding behind the fixed header */}
+      {/* Top Navbar Spacer */}
       <div className="h-24 sm:h-28 shrink-0 relative z-30" />
 
-      {/* Typography & UI Container (Perfectly centered vertically in remaining space) */}
+      {/* Typography & UI Container */}
       <div className="container mx-auto px-6 md:px-12 relative z-30 w-full max-w-7xl my-auto">
         <div ref={contentRef} className="max-w-2xl will-change-transform">
           
@@ -208,7 +208,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Bottom Telemetry Status Bar (Locked to the bottom of the screen) */}
+      {/* Bottom Telemetry Status Bar */}
       <div className="hero-footer-telemetry container mx-auto px-6 md:px-12 w-full max-w-7xl pb-8 relative z-30 shrink-0">
         <div className="pt-5 border-t border-[#18181b] flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-[#71717a]">
           <div className="status-item flex items-center gap-2.5">
