@@ -28,12 +28,11 @@ export default function Home() {
       {/* 6. Dark: The Company & Institutional DNA */}
       <Company />
 
-      {/* 7. Dark: Engineering Culture & Open Requisitions */}
-      <Careers />
+
 
       {/* 8. Light (Contrast Break 2): Minimalist Inquiry Gateway */}
       <ContactGateway/>
-      {/* 9. Dark: Terminal Footer */}
+     
     </main>
   );
 }

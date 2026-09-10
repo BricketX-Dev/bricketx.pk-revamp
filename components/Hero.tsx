@@ -173,13 +173,13 @@ export default function Hero() {
 
           <h1 className="text-6xl sm:text-7xl md:text-8xl font-semibold tracking-tight text-white mb-6 leading-[0.95]">
             <div className="overflow-hidden pb-1.5">
-              <span className="title-word block">Build.</span>
+              <span className="title-word block">Build</span>
             </div>
             <div className="overflow-hidden pb-1.5">
-              <span className="title-word block text-[#a1a1aa]">Scale.</span>
+              <span className="title-word block text-[#a1a1aa]">Scale</span>
             </div>
             <div className="overflow-hidden pb-1.5">
-              <span className="title-word block text-[#c39967]">Execute.</span>
+              <span className="title-word block text-[#c39967]">Execute</span>
             </div>
           </h1>
 
