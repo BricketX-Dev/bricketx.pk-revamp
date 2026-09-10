@@ -4,7 +4,7 @@ import { useRef, MouseEvent } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { Terminal, ShieldCheck, Activity, Cpu } from "lucide-react";
+import { Terminal, ShieldCheck, Cpu } from "lucide-react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -13,25 +13,31 @@ if (typeof window !== "undefined") {
 export default function WhatWeBuildHero() {
   const container = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGGElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const spotlightRef = useRef<HTMLDivElement>(null);
 
-  const xToSvg = useRef<gsap.QuickToFunc | null>(null);
-  const yToSvg = useRef<gsap.QuickToFunc | null>(null);
+  const xToSpot = useRef<gsap.QuickToFunc | null>(null);
+  const yToSpot = useRef<gsap.QuickToFunc | null>(null);
 
   useGSAP(() => {
-    if (svgRef.current) {
-      xToSvg.current = gsap.quickTo(svgRef.current, "x", { duration: 1.2, ease: "power2.out" });
-      yToSvg.current = gsap.quickTo(svgRef.current, "y", { duration: 1.2, ease: "power2.out" });
+    // 1. Mouse Spotlight tracking
+    if (spotlightRef.current) {
+      xToSpot.current = gsap.quickTo(spotlightRef.current, "x", { duration: 0.4, ease: "power2.out" });
+      yToSpot.current = gsap.quickTo(spotlightRef.current, "y", { duration: 0.4, ease: "power2.out" });
     }
 
-    gsap.to(".matrix-radar-spin", {
-      rotation: 360,
-      transformOrigin: "center center",
-      duration: 50,
-      repeat: -1,
-      ease: "none",
-    });
+    // 2. Slow breathing zoom on background video
+    if (videoRef.current) {
+      gsap.to(videoRef.current, {
+        scale: 1.06,
+        duration: 12,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+    }
 
+    // 3. Staggered Entrance
     const introTl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
     introTl
@@ -59,11 +65,8 @@ export default function WhatWeBuildHero() {
         "-=0.4"
       );
 
-    gsap.to(contentRef.current, {
-      y: -70,
-      opacity: 0.2,
-      filter: "blur(4px)",
-      ease: "none",
+    // 4. Parallax Exit on Scroll
+    const exitTl = gsap.timeline({
       scrollTrigger: {
         trigger: container.current,
         start: "top top",
@@ -71,47 +74,78 @@ export default function WhatWeBuildHero() {
         scrub: true,
       },
     });
+
+    exitTl
+      .to(contentRef.current, {
+        y: -80,
+        opacity: 0,
+        filter: "blur(2px)",
+        ease: "none",
+      }, 0)
+      .to(videoRef.current, {
+        yPercent: 18,
+        opacity: 0.12,
+        ease: "none",
+      }, 0);
+
   }, { scope: container });
 
   const handleMouseMove = (e: MouseEvent<HTMLElement>) => {
     if (!container.current) return;
     const rect = container.current.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    xToSvg.current?.(x * 0.03);
-    yToSvg.current?.(y * 0.03);
+    xToSpot.current?.(x - 250);
+    yToSpot.current?.(y - 250);
   };
 
   return (
     <section
       ref={container}
       onMouseMove={handleMouseMove}
-      className="relative pt-36 pb-24 md:pt-44 md:pb-32 bg-[#0a0a0b] text-[#f4f4f5] border-b border-zinc-800/80 overflow-hidden select-none"
+      className="relative min-h-[90vh] md:min-h-[95vh] w-full flex flex-col justify-center pt-36 pb-24 md:pt-44 md:pb-32 bg-[#0a0a0b] text-[#f4f4f5] border-b border-zinc-800/80 overflow-hidden select-none"
     >
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:52px_52px] pointer-events-none opacity-80" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#C39967]/10 blur-[180px] pointer-events-none rounded-full" />
+      {/* 3D Render Background Video Layer */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-40 filter contrast-125 will-change-transform"
+        >
+          <source src="/videos/what-we-build-hero-loop.mp4" type="video/mp4" />
+        </video>
 
-      {/* Vector Hardware Grid */}
-      <div className="absolute inset-0 flex items-center justify-end pr-[5%] lg:pr-[8%] pointer-events-none overflow-hidden opacity-35">
-        <svg viewBox="0 0 700 700" className="w-[500px] h-[500px] lg:w-[650px] lg:h-[650px] will-change-transform" fill="none">
-          <g ref={svgRef}>
-            <circle cx="350" cy="350" r="280" stroke="#52525b" strokeWidth="1" strokeDasharray="8 12" className="matrix-radar-spin" />
-            <circle cx="350" cy="350" r="190" stroke="#C39967" strokeWidth="1.2" strokeDasharray="6 6" />
-            <circle cx="350" cy="350" r="110" stroke="#3f3f46" strokeWidth="0.8" />
-            <line x1="100" y1="350" x2="600" y2="350" stroke="#C39967" strokeWidth="0.75" strokeOpacity="0.4" />
-            <line x1="350" y1="100" x2="350" y2="600" stroke="#C39967" strokeWidth="0.75" strokeOpacity="0.4" />
-            <circle cx="350" cy="350" r="4" fill="#C39967" />
-          </g>
-        </svg>
+        {/* Soft edge gradients to ensure text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0b] via-[#0a0a0b]/75 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0b] via-transparent to-[#0a0a0b]/80 z-10" />
       </div>
 
-      <div ref={contentRef} className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10 will-change-transform">
-        <div className="build-badge inline-flex items-center gap-2.5 px-3.5 py-1.5 mb-6 rounded-md border border-[#C39967]/40 bg-[#C39967]/10 text-xs font-mono font-semibold text-[#C39967] uppercase tracking-widest shadow-xs">
+      {/* Dynamic Cursor Spotlight */}
+      <div
+        ref={spotlightRef}
+        className="pointer-events-none absolute top-0 left-0 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle_at_center,#C39967_0%,transparent_70%)] opacity-20 blur-3xl z-10 will-change-transform"
+      />
+
+      {/* Background Architectural Grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:52px_52px] pointer-events-none opacity-80 z-10" />
+
+      {/* Atmospheric Ambient Warm Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#C39967]/10 blur-[180px] pointer-events-none rounded-full z-10" />
+
+      {/* Typography & Telemetry Container */}
+      <div ref={contentRef} className="container mx-auto px-6 md:px-12 max-w-7xl relative z-20 will-change-transform">
+        
+        {/* Monospace Badge */}
+        <div className="build-badge inline-flex items-center gap-2.5 px-3.5 py-1.5 mb-6 rounded-md border border-[#C39967]/40 bg-[#C39967]/10 backdrop-blur-md text-xs font-mono font-semibold text-[#C39967] uppercase tracking-widest shadow-xs">
           <Terminal size={13} />
           What We Build // Systems Portfolio
         </div>
 
+        {/* Masked Headline Reveal */}
         <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[0.95] max-w-4xl">
           <div className="overflow-hidden pb-1">
             <span className="build-title-line block">Not Services.</span>
@@ -121,12 +155,13 @@ export default function WhatWeBuildHero() {
           </div>
         </h1>
 
-        <p className="build-copy text-base sm:text-lg text-zinc-400 max-w-2xl font-light leading-relaxed mb-10">
+        {/* Narrative Copy */}
+        <p className="build-copy text-base sm:text-lg text-zinc-300 max-w-2xl font-light leading-relaxed mb-10">
           BricketX Pakistan doesn&apos;t ship one-off deliverables. It builds and runs the infrastructure that keeps the entire BricketX network moving — from the portal investors log into to the tooling that runs behind the scenes.
         </p>
 
-        {/* Operational Readouts */}
-        <div className="pt-6 border-t border-zinc-800/80 flex flex-wrap items-center gap-6 font-mono text-xs text-zinc-500">
+        {/* Operational Telemetry Readouts */}
+        <div className="pt-6 border-t border-zinc-800/80 flex flex-wrap items-center gap-6 font-mono text-xs text-zinc-400">
           <div className="build-metric-chip flex items-center gap-2">
             <ShieldCheck size={14} className="text-[#C39967]" />
             <span className="text-zinc-200 font-bold">10 Core Systems</span>
@@ -143,6 +178,7 @@ export default function WhatWeBuildHero() {
             <span className="text-zinc-300">Deterministic Pipelines</span>
           </div>
         </div>
+
       </div>
     </section>
   );
