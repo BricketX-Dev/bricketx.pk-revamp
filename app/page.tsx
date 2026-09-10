@@ -5,7 +5,7 @@ import WhatWeBuild from "@/components/WhatWeBuild";
 import GlobalNetwork from "@/components/GlobalNetwork";
 import Company from "@/components/Company";
 import Careers from "@/components/Careers";
-import ContactTerminal from "@/components/ContactTerminal";
+import ContactGateway from "@/components/ContactGateway";
 
 export default function Home() {
   return (
@@ -32,7 +32,7 @@ export default function Home() {
       <Careers />
 
       {/* 8. Light (Contrast Break 2): Minimalist Inquiry Gateway */}
-      <ContactTerminal/>
+      <ContactGateway/>
       {/* 9. Dark: Terminal Footer */}
     </main>
   );
