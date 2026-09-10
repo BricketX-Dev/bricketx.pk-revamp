@@ -28,13 +28,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-      <body className="bg-zinc-950 text-white selection:bg-bricket-gold/30 selection:text-white">
+      <body className="bg-[#0a0a0b] text-white flex flex-col min-h-screen selection:bg-bricket-gold/30 selection:text-white">
         <CustomCursor />
         <SmoothScroll>
           <Navbar />
-          {children}
+          <div className="flex-grow">{children}</div>
+          <Footer />
         </SmoothScroll>
-        <Footer/>
       </body>
     </html>
   );

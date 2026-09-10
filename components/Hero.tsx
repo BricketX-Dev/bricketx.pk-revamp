@@ -189,7 +189,7 @@ export default function Hero() {
 
           <div className="hero-actions flex flex-wrap items-center gap-4">
             <a
-              href="#departments"
+              href="/departments"
               className="group inline-flex items-center gap-3 px-7 py-3.5 bg-white text-black text-sm font-semibold hover:bg-[#e4e4e7] transition-colors rounded-sm"
             >
               <span>Explore Departments</span>
@@ -197,7 +197,7 @@ export default function Hero() {
             </a>
 
             <a
-              href="#what-we-build"
+              href="/what-we-build"
               className="inline-flex items-center gap-3 px-7 py-3.5 border border-[#27272a] hover:border-[#3f3f46] text-[#e4e4e7] text-sm font-medium transition-colors bg-[#0a0a0b]/60 backdrop-blur-md rounded-sm"
             >
               <Play size={12} className="fill-current text-[#c39967]" />
