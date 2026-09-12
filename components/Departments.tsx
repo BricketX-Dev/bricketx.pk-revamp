@@ -27,7 +27,10 @@ const departmentData = [
     unit: "Core Digital Infrastructure",
     description: "Architecting high-concurrency web platforms, autonomous AI workflows, proprietary investor portals, and hardened cybersecurity perimeters that power the entire global network.",
     icon: Code2,
-    accentColor: "from-[#C39967]/15 via-white to-white",
+    accentColor: "from-[#C39967]/20 via-[#C39967]/5 to-transparent",
+    borderColor: "border-[#C39967]/40",
+    shadowColor: "shadow-[#C39967]/15",
+    accentLine: "bg-gradient-to-r from-[#C39967] to-[#C39967]/10",
     badge: "99.99% Uptime",
     capabilities: ["Web Architecture", "AI & Autonomous Systems", "Automation Pipelines", "Hardened Cyber Security"],
     stats: [
@@ -43,7 +46,10 @@ const departmentData = [
     unit: "Global Demand Engine",
     description: "Scaling international audience reach across search surfaces, data-driven paid acquisition, cinematic video production, and high-impact investor relations outreach.",
     icon: Megaphone,
-    accentColor: "from-amber-500/10 via-white to-white",
+    accentColor: "from-amber-500/20 via-amber-500/5 to-transparent",
+    borderColor: "border-amber-500/40",
+    shadowColor: "shadow-amber-500/15",
+    accentLine: "bg-gradient-to-r from-amber-500 to-amber-500/10",
     badge: "Global Channels",
     capabilities: ["Search Engine Optimization", "Institutional PR", "Video Production", "Targeted Paid Ads"],
     stats: [
@@ -59,7 +65,10 @@ const departmentData = [
     unit: "Liquidity & Structured Compliance",
     description: "Managing frictionless partner onboarding, auditable compliance protocols, real-time CRM governance, and automated financial settlements across all active territories.",
     icon: Briefcase,
-    accentColor: "from-emerald-500/10 via-white to-white",
+    accentColor: "from-emerald-500/20 via-emerald-500/5 to-transparent",
+    borderColor: "border-emerald-500/40",
+    shadowColor: "shadow-emerald-500/15",
+    accentLine: "bg-gradient-to-r from-emerald-500 to-emerald-500/10",
     badge: "Audited & Regulated",
     capabilities: ["Investor Relations", "Enterprise CRM", "Performance Reporting", "Legal Documentation"],
     stats: [
@@ -75,7 +84,10 @@ const departmentData = [
     unit: "Brand Systems & Spatial Motion",
     description: "Crafting institutional design systems, interactive financial interfaces, 3D motion graphics, and fluid digital experiences that define how the network looks and feels.",
     icon: Palette,
-    accentColor: "from-blue-500/10 via-white to-white",
+    accentColor: "from-blue-500/20 via-blue-500/5 to-transparent",
+    borderColor: "border-blue-500/40",
+    shadowColor: "shadow-blue-500/15",
+    accentLine: "bg-gradient-to-r from-blue-500 to-blue-500/10",
     badge: "Design System 2.4",
     capabilities: ["Brand Architecture", "UI/UX Architecture", "3D & Motion Graphics", "Product Prototyping"],
     stats: [
@@ -91,7 +103,10 @@ const departmentData = [
     unit: "Research & Sprint Delivery",
     description: "Bridging exploratory concepts and market research into deployed, enterprise-scale products through rigorous sprint methodologies and cross-hub coordination.",
     icon: Workflow,
-    accentColor: "from-[#C39967]/15 via-white to-white",
+    accentColor: "from-[#C39967]/20 via-[#C39967]/5 to-transparent",
+    borderColor: "border-[#C39967]/40",
+    shadowColor: "shadow-[#C39967]/15",
+    accentLine: "bg-gradient-to-r from-[#C39967] to-[#C39967]/10",
     badge: "Active Sprints",
     capabilities: ["Market Intelligence", "Agile Process Management", "Internal Upskilling", "Cross-Hub Coordination"],
     stats: [
@@ -273,7 +288,8 @@ export default function Departments() {
         className="w-full h-screen flex flex-col justify-between py-10 px-6 md:px-12 max-w-7xl mx-auto relative z-10 overflow-hidden"
       >
         {/* Header Strip */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 shrink-0">
+        {/* Header Strip */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 shrink-0 mb-8">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-3 rounded-md border border-[#C39967]/40 bg-[#FAF5EE] text-xs font-mono font-semibold text-[#C39967] uppercase tracking-widest shadow-xs">
               <Terminal size={14} />
@@ -289,6 +305,7 @@ export default function Departments() {
         </div>
 
         {/* Card Stage Wrapper */}
+        {/* Card Stage Wrapper */}
         <div className="relative w-full max-w-5xl mx-auto h-[480px] md:h-[510px] my-auto">
           {departmentData.map((dept, idx) => {
             const Icon = dept.icon;
@@ -296,19 +313,24 @@ export default function Departments() {
             return (
               <div
                 key={dept.num}
-                className="dept-card-wrapper absolute inset-0 w-full h-full rounded-3xl border border-[#E8EBED] bg-white/95 backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.06)] overflow-hidden flex flex-col justify-between p-8 md:p-12 will-change-transform"
+                // ADDED: 'group' class and smooth transitions for shadow and border. 
+                // Note: We avoid transitioning 'transform' here so GSAP doesn't break.
+                className="dept-card-wrapper group absolute inset-0 w-full h-full rounded-3xl border border-[#C39967]/30 hover:border-[#C39967]/70 bg-white/85 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(195,153,103,0.25)] hover:shadow-[0_30px_80px_-15px_rgba(195,153,103,0.45)] transition-[box-shadow,border-color] duration-500 ease-out overflow-hidden flex flex-col justify-between p-8 md:p-12 will-change-transform"
                 style={{ zIndex: idx + 10 }}
               >
-                {/* Subtle Department Ambient Tint */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${dept.accentColor} opacity-70 pointer-events-none`} />
+                {/* Sleek Top Accent Line - Expands and brightens on hover */}
+                <div className="absolute top-0 left-0 w-full h-1.5 group-hover:h-2 bg-gradient-to-r from-[#C39967] via-[#C39967]/60 to-[#C39967]/10 opacity-80 group-hover:opacity-100 transition-all duration-500 ease-out pointer-events-none" />
 
-                {/* Big Architectural Watermark */}
-                <div className="absolute top-6 right-8 font-mono text-8xl md:text-9xl font-black text-[#18181B]/5 select-none pointer-events-none">
+                {/* Subtle Warm Ambient Glow - Intensifies on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#C39967]/15 group-hover:from-[#C39967]/25 via-transparent to-transparent transition-colors duration-700 ease-out pointer-events-none" />
+
+                {/* Big Architectural Watermark - Scales up, shifts, and darkens slightly on hover */}
+                <div className="absolute top-6 right-8 font-mono text-8xl md:text-9xl font-black text-[#18181B]/5 group-hover:text-[#18181B]/10 group-hover:-translate-x-2 group-hover:scale-110 origin-top-right transition-all duration-700 ease-out select-none pointer-events-none">
                   {dept.num}
                 </div>
 
                 {/* Card Header */}
-                <div className="relative z-10 flex items-center justify-between border-b border-[#E8EBED]/80 pb-5">
+                <div className="relative z-10 flex items-center justify-between border-b border-[#C39967]/20 group-hover:border-[#C39967]/40 transition-colors duration-500 pb-5">
                   <div className="flex items-center gap-3">
                     <span className="font-mono text-xs font-bold text-[#C39967] tracking-wider uppercase">
                       {dept.tag}
@@ -319,8 +341,8 @@ export default function Departments() {
                     </span>
                   </div>
 
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E8EBED] text-xs font-mono font-medium text-[#18181B] shadow-xs">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#C39967]/30 text-xs font-mono font-medium text-[#18181B] shadow-sm">
+                    <span className="w-2 h-2 rounded-full bg-[#C39967] animate-pulse" />
                     {dept.badge}
                   </div>
                 </div>
@@ -328,11 +350,12 @@ export default function Departments() {
                 {/* Card Body */}
                 <div className="relative z-10 my-auto py-2">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-14 h-14 rounded-2xl bg-[#FAF5EE] border border-[#C39967]/30 shadow-xs flex items-center justify-center text-[#C39967] shrink-0">
-                      <Icon size={26} />
+                    {/* Themed Icon Box - Inverts color, floats up, and casts a gold shadow on hover */}
+                    <div className="w-14 h-14 rounded-2xl bg-[#FAF5EE] group-hover:bg-[#C39967] border border-[#C39967]/40 group-hover:border-[#C39967] shadow-sm group-hover:shadow-[0_10px_25px_-5px_rgba(195,153,103,0.6)] flex items-center justify-center text-[#C39967] group-hover:text-white group-hover:-translate-y-1.5 transition-all duration-500 ease-out shrink-0">
+                      <Icon size={26} className="group-hover:scale-110 transition-transform duration-500 ease-out" />
                     </div>
                     <div>
-                      <span className="text-xs font-mono text-[#5E646D] uppercase tracking-wider block">
+                      <span className="text-xs font-mono text-[#5E646D] group-hover:text-[#C39967] transition-colors duration-300 uppercase tracking-wider block">
                         Engine Division {dept.num}
                       </span>
                       <h3 className="text-3xl md:text-5xl font-black tracking-tight text-[#18181B]">
@@ -347,12 +370,13 @@ export default function Departments() {
                 </div>
 
                 {/* Card Footer */}
-                <div className="relative z-10 pt-5 border-t border-[#E8EBED]/80 flex flex-col md:flex-row md:items-center justify-between gap-5">
+                <div className="relative z-10 pt-5 border-t border-[#C39967]/20 group-hover:border-[#C39967]/40 transition-colors duration-500 flex flex-col md:flex-row md:items-center justify-between gap-5">
                   <div className="flex flex-wrap gap-2">
                     {dept.capabilities.map((cap, cIdx) => (
                       <span 
                         key={cIdx} 
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FAFBFD] border border-[#E8EBED] text-xs font-semibold text-[#18181B]"
+                        // Individual Pill Hover - Lifts up and glows when the user mouses over specific capabilities
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/70 hover:bg-white backdrop-blur-sm border border-[#C39967]/20 hover:border-[#C39967]/60 hover:shadow-[0_4px_12px_-4px_rgba(195,153,103,0.4)] hover:-translate-y-0.5 transition-all duration-300 cursor-default text-xs font-semibold text-[#18181B]"
                       >
                         <CheckCircle2 size={13} className="text-[#C39967]" />
                         {cap}
@@ -363,8 +387,8 @@ export default function Departments() {
                   <div className="flex items-center gap-6 font-mono text-xs text-[#5E646D] self-end md:self-auto shrink-0">
                     {dept.stats.map((stat, sIdx) => (
                       <div key={sIdx} className="text-right">
-                        <span className="block text-[10px] uppercase text-[#A5ADB6] tracking-wider">{stat.label}</span>
-                        <span className="font-bold text-[#18181B] text-sm">{stat.val}</span>
+                        <span className="block text-[10px] uppercase text-[#C39967] tracking-wider">{stat.label}</span>
+                        <span className="font-bold text-[#18181B] text-sm group-hover:text-[#C39967] transition-colors duration-300">{stat.val}</span>
                       </div>
                     ))}
                   </div>
