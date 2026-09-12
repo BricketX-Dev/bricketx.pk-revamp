@@ -17,8 +17,7 @@ import {
   TerminalSquare, 
   ArrowUpRight, 
   Terminal, 
-  Activity,
-  ShieldCheck
+  Activity
 } from "lucide-react";
 
 if (typeof window !== "undefined") {
@@ -159,7 +158,9 @@ export default function WhatWeBuild() {
       {/* Pinned Target Viewport (Locks to screen while scrolling horizontally) */}
       <div 
         ref={pinViewportRef} 
-        className="w-full h-screen max-h-[100dvh] flex flex-col justify-between py-10 md:py-14 overflow-hidden relative z-10"
+        // Changed: Replaced py-10 md:py-14 with pt-24 pb-10 md:pt-28 md:pb-14 
+        // to add extra space specifically at the top.
+        className="w-full h-screen max-h-[100dvh] flex flex-col justify-between pt-24 pb-10 md:pt-28 md:pb-14 overflow-hidden relative z-10"
       >
         {/* Top Header Strip */}
         <div className="container mx-auto px-6 md:px-12 max-w-7xl shrink-0">
@@ -172,16 +173,6 @@ export default function WhatWeBuild() {
               <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
                 Not Services. <span className="text-[#C39967]">Systems.</span>
               </h2>
-            </div>
-            
-            <div className="flex items-center gap-4 text-xs font-mono text-zinc-400">
-              <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-zinc-800 bg-zinc-900/60">
-                <ShieldCheck size={13} className="text-[#C39967]" />
-                <span>24/7 Production Deployment</span>
-              </div>
-              <span className="text-[11px] text-zinc-500 uppercase tracking-widest hidden md:inline">
-                Scroll to slide catalog &rarr;
-              </span>
             </div>
           </div>
         </div>
@@ -233,12 +224,6 @@ export default function WhatWeBuild() {
                     <p className="text-xs md:text-sm text-zinc-400 leading-relaxed font-light">
                       {system.desc}
                     </p>
-                  </div>
-
-                  {/* Card Footer */}
-                  <div className="pt-4 border-t border-zinc-800/70 flex items-center justify-between font-mono text-[11px] text-zinc-500">
-                    <span>ENTERPRISE SPEC</span>
-                    <span className="text-zinc-300">INTERNAL HUB</span>
                   </div>
                 </div>
               );

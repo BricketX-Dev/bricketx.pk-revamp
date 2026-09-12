@@ -230,7 +230,7 @@ export default function Company() {
                     background: `radial-gradient(350px circle at var(--mouse-x, 150px) var(--mouse-y, 100px), rgba(195, 153, 103, 0.1), transparent 80%), rgba(12, 13, 16, 0.65)`,
                   }}
                 >
-                  {/* Top Identifier & Badge */}
+                  {/* Top Identifier */}
                   <div>
                     <div className="flex items-center justify-between font-mono text-xs pb-4 mb-5 border-b border-zinc-800/70">
                       <div className="flex items-center gap-2">
@@ -238,9 +238,7 @@ export default function Company() {
                         <span className="text-zinc-600">/</span>
                         <span className="text-zinc-500 uppercase">{pillar.tag}</span>
                       </div>
-                      <span className="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                        {pillar.badge}
-                      </span>
+                      {/* Badge has been removed from here */}
                     </div>
 
                     <div className="flex items-start justify-between gap-4 mb-5">

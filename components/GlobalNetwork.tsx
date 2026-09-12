@@ -363,25 +363,49 @@ export default function GlobalNetwork() {
               <div
                 key={node.id}
                 onClick={() => handleSelectRegion(node)}
-                className={`global-reveal group cursor-pointer p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
+                className={`global-reveal group cursor-pointer relative overflow-hidden p-6 rounded-2xl border transition-all duration-500 ease-out flex flex-col justify-between will-change-transform ${
                   isSelected
-                    ? "bg-white border-[#C39967] shadow-[0_12px_32px_rgba(195,153,103,0.12)] -translate-y-1"
-                    : "bg-white/80 border-[#E8EBED] hover:border-zinc-300 hover:bg-white"
+                    ? "bg-white border-[#C39967]/60 shadow-[0_20px_60px_-15px_rgba(195,153,103,0.3)] -translate-y-1"
+                    : "bg-white border-[#E8EBED] hover:border-[#C39967]/50 shadow-sm hover:shadow-[0_20px_60px_-15px_rgba(195,153,103,0.2)] hover:-translate-y-1"
                 }`}
               >
-                <div>
-                  <div className="flex items-center justify-between font-mono text-xs pb-3 mb-4 border-b border-[#E8EBED]">
-                    <span className="text-[#C39967] font-bold">NODE {node.id}</span>
+                {/* Sleek Top Accent Line - Slides from left to right and fades in */}
+                <div 
+                  className={`absolute top-0 left-0 h-1.5 bg-gradient-to-r from-[#C39967] via-[#C39967]/70 to-[#C39967]/10 transition-all duration-500 ease-out pointer-events-none ${
+                    isSelected ? "w-full opacity-100" : "w-0 opacity-0 group-hover:w-full group-hover:opacity-100"
+                  }`} 
+                />
+
+                {/* Subtle Warm Ambient Glow - Only on hover/select */}
+                <div 
+                  className={`absolute inset-0 bg-gradient-to-br via-transparent to-transparent transition-colors duration-700 ease-out pointer-events-none ${
+                    isSelected ? "from-[#C39967]/15" : "from-transparent group-hover:from-[#C39967]/10"
+                  }`} 
+                />
+
+                {/* Card Header */}
+                <div className="relative z-10">
+                  <div className={`flex items-center justify-between font-mono text-xs pb-3 mb-4 border-b transition-colors duration-500 ${
+                    isSelected ? "border-[#C39967]/30" : "border-[#E8EBED] group-hover:border-[#C39967]/30"
+                  }`}>
+                    <span className={`font-bold tracking-wider transition-colors ${isSelected ? "text-[#C39967]" : "text-[#18181B] group-hover:text-[#C39967]"}`}>
+                      NODE {node.id}
+                    </span>
                     <span className="text-[10px] uppercase font-semibold text-[#5E646D]">
                       {node.mandate}
                     </span>
                   </div>
 
-                  <div className="w-10 h-10 rounded-xl bg-[#FAFBFD] border border-[#E8EBED] flex items-center justify-center text-[#C39967] mb-4 group-hover:border-[#C39967]/50 transition-colors">
-                    <Icon size={18} />
+                  {/* Themed Icon Box - Clean gray to glowing gold */}
+                  <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center mb-4 transition-all duration-500 ease-out shrink-0 ${
+                    isSelected 
+                      ? "bg-[#C39967] border-[#C39967] shadow-[0_8px_20px_-4px_rgba(195,153,103,0.5)] text-white scale-105" 
+                      : "bg-[#FAFBFD] border-[#E8EBED] group-hover:bg-[#C39967] group-hover:border-[#C39967] group-hover:shadow-[0_8px_20px_-4px_rgba(195,153,103,0.5)] text-[#5E646D] group-hover:text-white group-hover:scale-105"
+                  }`}>
+                    <Icon size={20} className="transition-transform duration-500 ease-out" />
                   </div>
 
-                  <h3 className="text-xl font-extrabold text-[#18181B] mb-1.5">
+                  <h3 className="text-xl font-extrabold text-[#18181B] mb-1.5 tracking-tight">
                     {node.region}
                   </h3>
 
@@ -390,11 +414,14 @@ export default function GlobalNetwork() {
                   </p>
                 </div>
 
-                <div className="pt-4 mt-6 border-t border-[#E8EBED] flex items-center justify-between text-xs font-mono">
-                  <span className={isSelected ? "text-[#C39967] font-bold" : "text-[#A5ADB6]"}>
+                {/* Card Footer */}
+                <div className={`relative z-10 pt-4 mt-6 border-t flex items-center justify-between text-xs font-mono transition-colors duration-500 ${
+                  isSelected ? "border-[#C39967]/30" : "border-[#E8EBED] group-hover:border-[#C39967]/30"
+                }`}>
+                  <span className={`transition-colors duration-300 ${isSelected ? "text-[#C39967] font-bold" : "text-[#A5ADB6] group-hover:text-[#C39967]"}`}>
                     {isSelected ? "VIEWING DETAILS" : "INSPECT REGION"}
                   </span>
-                  <ArrowRight size={13} className={isSelected ? "text-[#C39967]" : "text-[#A5ADB6] group-hover:text-[#18181B] transition-colors"} />
+                  <ArrowRight size={13} className={isSelected ? "text-[#C39967]" : "text-[#A5ADB6] group-hover:text-[#C39967] transition-colors"} />
                 </div>
               </div>
             );

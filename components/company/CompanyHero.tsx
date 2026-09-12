@@ -1,10 +1,10 @@
 "use client";
 
-import { useRef, MouseEvent } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { Building2, Globe2, ShieldCheck, Activity } from "lucide-react";
+import { Building2, Globe2, ShieldCheck } from "lucide-react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -13,25 +13,21 @@ if (typeof window !== "undefined") {
 export default function CompanyHero() {
   const container = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const orbitalRef = useRef<SVGGElement>(null);
-
-  const xToOrbital = useRef<gsap.QuickToFunc | null>(null);
-  const yToOrbital = useRef<gsap.QuickToFunc | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useGSAP(() => {
-    if (orbitalRef.current) {
-      xToOrbital.current = gsap.quickTo(orbitalRef.current, "x", { duration: 1.2, ease: "power2.out" });
-      yToOrbital.current = gsap.quickTo(orbitalRef.current, "y", { duration: 1.2, ease: "power2.out" });
+    // 1. Slow breathing zoom on background video
+    if (videoRef.current) {
+      gsap.to(videoRef.current, {
+        scale: 1.06,
+        duration: 12,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
     }
 
-    gsap.to(".company-radar-spin", {
-      rotation: 360,
-      transformOrigin: "center center",
-      duration: 60,
-      repeat: -1,
-      ease: "none",
-    });
-
+    // 2. Staggered Entrance
     const introTl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
     introTl
@@ -59,11 +55,8 @@ export default function CompanyHero() {
         "-=0.4"
       );
 
-    gsap.to(contentRef.current, {
-      y: -70,
-      opacity: 0.2,
-      filter: "blur(4px)",
-      ease: "none",
+    // 3. Parallax Exit on Scroll
+    const exitTl = gsap.timeline({
       scrollTrigger: {
         trigger: container.current,
         start: "top top",
@@ -71,42 +64,50 @@ export default function CompanyHero() {
         scrub: true,
       },
     });
+
+    exitTl
+      .to(contentRef.current, {
+        y: -70,
+        opacity: 0.2,
+        filter: "blur(4px)",
+        ease: "none",
+      }, 0)
+      .to(videoRef.current, {
+        yPercent: 18,
+        opacity: 0.12,
+        ease: "none",
+      }, 0);
+
   }, { scope: container });
-
-  const handleMouseMove = (e: MouseEvent<HTMLElement>) => {
-    if (!container.current) return;
-    const rect = container.current.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-
-    xToOrbital.current?.(x * 0.03);
-    yToOrbital.current?.(y * 0.03);
-  };
 
   return (
     <section
       ref={container}
-      onMouseMove={handleMouseMove}
-      className="relative pt-36 pb-24 md:pt-44 md:pb-32 bg-[#0a0a0b] text-[#f4f4f5] border-b border-zinc-800/80 overflow-hidden select-none"
+      className="relative min-h-[90vh] md:min-h-[95vh] w-full flex flex-col justify-center pt-36 pb-24 md:pt-44 md:pb-32 bg-[#0a0a0b] text-[#f4f4f5] border-b border-zinc-800/80 overflow-hidden select-none"
     >
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:52px_52px] pointer-events-none opacity-80" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#C39967]/10 blur-[180px] pointer-events-none rounded-full" />
+      {/* 3D Render Background Video Layer */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-40 filter contrast-125 will-change-transform"
+        >
+          <source src="/videos/company-hero.mp4" type="video/mp4" />
+        </video>
 
-      {/* Vector Orbital Canvas */}
-      <div className="absolute inset-0 flex items-center justify-end pr-[5%] lg:pr-[8%] pointer-events-none overflow-hidden opacity-35">
-        <svg viewBox="0 0 700 700" className="w-[500px] h-[500px] lg:w-[650px] lg:h-[650px] will-change-transform" fill="none">
-          <g ref={orbitalRef}>
-            <circle cx="350" cy="350" r="290" stroke="#52525b" strokeWidth="1" strokeDasharray="10 14" className="company-radar-spin" />
-            <circle cx="350" cy="350" r="200" stroke="#C39967" strokeWidth="1.2" strokeDasharray="6 8" />
-            <circle cx="350" cy="350" r="120" stroke="#3f3f46" strokeWidth="0.8" />
-            <line x1="120" y1="350" x2="580" y2="350" stroke="#C39967" strokeWidth="0.75" strokeOpacity="0.4" />
-            <line x1="350" y1="120" x2="350" y2="580" stroke="#C39967" strokeWidth="0.75" strokeOpacity="0.4" />
-            <circle cx="350" cy="350" r="4" fill="#C39967" />
-          </g>
-        </svg>
+        {/* Soft edge gradients to ensure text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0b] via-[#0a0a0b]/75 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0b] via-transparent to-[#0a0a0b]/80 z-10" />
       </div>
 
-      <div ref={contentRef} className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10 will-change-transform">
+      {/* Background Architectural Grid & Glow */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:52px_52px] pointer-events-none opacity-80 z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#C39967]/10 blur-[180px] pointer-events-none rounded-full z-10" />
+
+      <div ref={contentRef} className="container mx-auto px-6 md:px-12 max-w-7xl relative z-20 will-change-transform">
         <div className="comp-hero-badge inline-flex items-center gap-2.5 px-3.5 py-1.5 mb-6 rounded-md border border-[#C39967]/40 bg-[#C39967]/10 text-xs font-mono font-semibold text-[#C39967] uppercase tracking-widest shadow-xs">
           <Building2 size={13} />
           The Company // Karachi Engine Room
