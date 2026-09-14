@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     q: "How does BricketX operate?",
-    a: "Through a disciplined idea-to-scale process run by the hub's five departments — Technology, Marketing, Operations, Creative and Production. Every initiative moves from research to design, build, automation, and global distribution.",
+    a: "Through a disciplined idea-to-scale process run by the hub's five departments - Technology, Marketing, Operations, Creative and Production. Every initiative moves from research to design, build, automation, and global distribution.",
   },
   {
     q: "What is the BricketX Innovation Lab?",

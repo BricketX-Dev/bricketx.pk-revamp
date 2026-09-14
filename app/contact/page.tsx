@@ -3,7 +3,7 @@ import ContactHero from "@/components/contact/ContactHero";
 import ContactForm from "@/components/contact/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact // BricketX Pakistan",
+  title: "Contact - BricketX Pakistan",
   description: "Get in touch with the BricketX operational hub in Karachi. Let's build the next system.",
 };
 

@@ -17,7 +17,7 @@ export default function CareersCTA() {
           Ready To Join The Engine Room?
         </h2>
         <p className="text-sm md:text-base text-[#5E646D] font-normal max-w-xl mx-auto mb-10 leading-relaxed">
-          Pick a department, or send us your work — we&apos;re always looking for people who build.
+          Pick a department, or send us your work - we&apos;re always looking for people who build.
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-4">

@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BricketX Pakistan // Operational & Innovation Hub",
+  title: "BricketX Pakistan - Operational & Innovation Hub",
   description: "The Karachi engine room powering the global BricketX network.",
 };
 

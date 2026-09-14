@@ -13,7 +13,7 @@ if (typeof window !== "undefined") {
 const faqs = [
   {
     q: "What is it like to work at BricketX Pakistan?",
-    a: "You join the in-house Karachi hub building a global investment network — working across engineering, design, marketing, AI, operations and production, not client service. Every team member has direct ownership over institutional infrastructure.",
+    a: "You join the in-house Karachi hub building a global investment network - working across engineering, design, marketing, AI, operations and production, not client service. Every team member has direct ownership over institutional infrastructure.",
   },
   {
     q: "What roles does BricketX Pakistan hire for?",

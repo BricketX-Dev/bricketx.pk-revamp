@@ -166,7 +166,7 @@ export default function Careers() {
             </h2>
           </div>
           <p className="culture-reveal text-sm md:text-base text-zinc-400 max-w-sm font-light leading-relaxed">
-            The Karachi hub operates with the precision of a high-frequency trading desk. No bloat, no bureaucracy—just elite talent building bulletproof systems.
+            The Karachi hub operates with the precision of a high-frequency trading desk. No bloat, no bureaucracy-just elite talent building bulletproof systems.
           </p>
         </div>
 

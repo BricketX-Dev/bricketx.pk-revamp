@@ -7,7 +7,7 @@ import CompanyFAQ from "@/components/company/CompanyFAQ";
 import CompanyCTA from "@/components/company/CompanyCTA";
 
 export const metadata: Metadata = {
-  title: "The Company // BricketX Pakistan",
+  title: "The Company - BricketX Pakistan",
   description: "The engine behind the network. The structure, operating model, and global presence of BricketX.",
 };
 

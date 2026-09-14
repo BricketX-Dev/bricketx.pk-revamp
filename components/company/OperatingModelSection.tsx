@@ -53,7 +53,7 @@ export default function OperatingModelSection() {
             </h2>
           </div>
           <p className="text-sm md:text-base text-[#5E646D] max-w-md font-normal leading-relaxed">
-            Every project moves through the same path across the hub&apos;s five departments — ensuring high precision, auditability, and speed.
+            Every project moves through the same path across the hub&apos;s five departments - ensuring high precision, auditability, and speed.
           </p>
         </div>
 

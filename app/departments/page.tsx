@@ -6,7 +6,7 @@ import DepartmentCTA from "@/components/departments/DepartmentCTA";
 import DepartmentsHero from "@/components/departments/DepartmentHero";
 
 export const metadata: Metadata = {
-  title: "Departments // BricketX Pakistan",
+  title: "Departments - BricketX Pakistan",
   description: "Five teams, one engine room. The five operating departments powering the BricketX network from Karachi.",
 };
 

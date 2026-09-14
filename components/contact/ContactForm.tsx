@@ -4,7 +4,7 @@ import { useState, useRef, FormEvent } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, Mail, MapPin, Activity, Fingerprint } from "lucide-react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -26,7 +26,7 @@ export default function ContactForm() {
         ease: "power3.out",
         scrollTrigger: {
           trigger: container.current,
-          start: "top 80%",
+          start: "top 85%",
         },
       }
     );
@@ -36,122 +36,196 @@ export default function ContactForm() {
     e.preventDefault();
     setStatus("SUBMITTING");
     
-    // Simulate payload transmission
+    // Simulate secure payload transmission
     setTimeout(() => {
       setStatus("SUCCESS");
-    }, 1500);
+    }, 1400);
   };
 
   return (
-    <section ref={container} className="py-24 md:py-32 bg-[#FAFBFD] text-[#18181B] border-b border-[#E8EBED]">
-      <div className="container mx-auto px-6 md:px-12 max-w-4xl">
-        
-        <div className="text-center mb-16">
-          <h2 className="form-reveal text-3xl md:text-5xl font-extrabold tracking-tight text-[#18181B] mb-4">
-            Send a <span className="text-[#C39967]">Secure Inquiry.</span>
-          </h2>
-          <p className="form-reveal text-sm md:text-base text-[#5E646D] font-normal max-w-lg mx-auto">
-            All transmissions are routed directly to the Karachi engineering and operations desk for review.
-          </p>
-        </div>
+    <section ref={container} className="relative pb-24 md:pb-36 bg-[#050505] text-[#f4f4f5] overflow-hidden">
+      
+      {/* Background Continuation */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none" />
 
-        <div className="form-reveal relative bg-white rounded-3xl border border-[#E8EBED] p-8 md:p-12 shadow-[0_15px_40px_rgba(0,0,0,0.03)]">
-          {status === "SUCCESS" ? (
-            <div className="flex flex-col items-center justify-center text-center py-16 animate-in fade-in zoom-in duration-500">
-              <div className="w-16 h-16 bg-emerald-50 rounded-full border border-emerald-100 flex items-center justify-center mb-6">
-                <CheckCircle2 size={32} className="text-emerald-500" />
-              </div>
-              <h3 className="text-2xl font-bold text-[#18181B] mb-3">Payload Received</h3>
-              <p className="text-[#5E646D] mb-8 max-w-sm">
-                Your inquiry has been successfully routed to the hub. A specialist will parse your data and respond shortly.
-              </p>
-              <button 
-                onClick={() => setStatus("IDLE")}
-                className="px-6 py-2.5 text-xs font-mono font-bold uppercase tracking-widest text-[#18181B] border border-[#E8EBED] rounded-lg hover:bg-[#FAFBFD] transition-colors"
-              >
-                Send Another
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className={`flex flex-col gap-8 transition-opacity duration-300 ${status === 'SUBMITTING' ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10 pt-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          
+          {/* Left Column: Official Coordinates & Directory */}
+          <div className="lg:col-span-4 flex flex-col gap-6 form-reveal">
+            
+            {/* Location Pane */}
+            <div className="p-8 rounded-2xl bg-zinc-950 border border-zinc-800/80 shadow-2xl flex flex-col justify-between h-full relative overflow-hidden group">
+              <div className="absolute top-0 left-0 w-1 h-full bg-zinc-800 transition-colors group-hover:bg-[#C39967]" />
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="flex flex-col gap-2 relative group">
-                  <label htmlFor="name" className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#A5ADB6]">
-                    Full Name / Designation
-                  </label>
-                  <input 
-                    required
-                    type="text" 
-                    id="name"
-                    className="w-full bg-transparent border-b border-[#E8EBED] focus:border-[#C39967] py-2.5 text-sm text-[#18181B] outline-none transition-colors placeholder:text-[#A5ADB6]/50"
-                    placeholder="Jane Doe"
-                  />
+              <div className="flex items-center justify-between mb-10">
+                <div className="w-10 h-10 rounded border border-zinc-800 bg-zinc-900 flex items-center justify-center text-[#C39967]">
+                  <MapPin size={18} />
                 </div>
+                <span className="flex items-center gap-1.5 text-[9px] font-mono uppercase font-bold text-emerald-400 bg-emerald-950/30 px-2 py-0.5 rounded border border-emerald-900/50">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  HQ ONLINE
+                </span>
+              </div>
+              
+              <div>
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-2 font-bold">
+                  Primary Node // Location
+                </span>
+                <h3 className="text-xl font-bold text-white mb-1">
+                  Karachi, Pakistan
+                </h3>
+                <p className="text-sm text-zinc-400 font-light">
+                  Central Operations &amp; Engineering Hub
+                </p>
+              </div>
+            </div>
 
-                <div className="flex flex-col gap-2 relative group">
-                  <label htmlFor="email" className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#A5ADB6]">
-                    Email / Return Route
-                  </label>
-                  <input 
-                    required
-                    type="email" 
-                    id="email"
-                    className="w-full bg-transparent border-b border-[#E8EBED] focus:border-[#C39967] py-2.5 text-sm text-[#18181B] outline-none transition-colors placeholder:text-[#A5ADB6]/50"
-                    placeholder="jane@company.com"
-                  />
+            {/* Comms Pane */}
+            <div className="p-8 rounded-2xl bg-zinc-950 border border-zinc-800/80 shadow-2xl flex flex-col justify-between h-full relative overflow-hidden group">
+              <div className="absolute top-0 left-0 w-1 h-full bg-zinc-800 transition-colors group-hover:bg-[#C39967]" />
+              
+              <div className="flex items-center justify-between mb-10">
+                <div className="w-10 h-10 rounded border border-zinc-800 bg-zinc-900 flex items-center justify-center text-[#C39967]">
+                  <Mail size={18} />
                 </div>
               </div>
-
-              <div className="flex flex-col gap-2 relative group">
-                <label htmlFor="subject" className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#A5ADB6]">
-                  Inquiry Category
-                </label>
-                <select 
-                  id="subject"
-                  className="w-full bg-transparent border-b border-[#E8EBED] focus:border-[#C39967] py-2.5 text-sm text-[#18181B] outline-none transition-colors appearance-none cursor-pointer"
-                >
-                  <option value="partnership">System Partnership / Integration</option>
-                  <option value="careers">Careers & Requisitions</option>
-                  <option value="operations">Operational Audit</option>
-                  <option value="other">General Comms</option>
-                </select>
+              
+              <div>
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-2 font-bold">
+                  Direct Inquiries
+                </span>
+                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-[#C39967] transition-colors">
+                  Info@bricketx.pk
+                </h3>
+                <p className="text-sm text-zinc-400 font-light">
+                  Monitored 24/7 by the internal desk.
+                </p>
               </div>
+            </div>
 
-              <div className="flex flex-col gap-2 relative group">
-                <label htmlFor="message" className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#A5ADB6]">
-                  Transmission Payload (Message)
-                </label>
-                <textarea 
-                  required
-                  id="message"
-                  rows={5}
-                  className="w-full bg-[#FAFBFD] border border-[#E8EBED] focus:border-[#C39967] p-4 text-sm text-[#18181B] outline-none transition-colors resize-none rounded-xl mt-2 placeholder:text-[#A5ADB6]/60"
-                  placeholder="Input request details..."
-                />
-              </div>
+          </div>
 
-              <div className="mt-4">
-                <button 
-                  type="submit"
-                  disabled={status === "SUBMITTING"}
-                  className="w-full group flex items-center justify-center gap-2 py-4 bg-[#18181B] hover:bg-[#C39967] text-white text-xs font-mono font-bold uppercase tracking-widest rounded-xl transition-colors duration-300 disabled:opacity-50"
-                >
-                  {status === "SUBMITTING" ? (
-                    "Transmitting..."
-                  ) : (
-                    <>
-                      Execute Transmission
-                      <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-                    </>
-                  )}
-                </button>
-              </div>
+          {/* Right Column: Institutional Input Form */}
+          <div className="lg:col-span-8 form-reveal">
+            <div className="bg-zinc-950 border border-zinc-800/80 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+              
+              {/* Subtle top inner gradient line */}
+              <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#C39967]/30 to-transparent" />
 
-            </form>
-          )}
+              {status === "SUCCESS" ? (
+                // Cryptographic Verification Success State
+                <div className="flex flex-col items-center justify-center text-center py-20 animate-in fade-in zoom-in duration-500">
+                  <div className="w-20 h-20 bg-zinc-900 rounded-full border border-[#C39967]/40 flex items-center justify-center mb-6 relative">
+                    <div className="absolute inset-0 rounded-full border border-[#C39967] animate-ping opacity-20" />
+                    <Fingerprint size={32} className="text-[#C39967]" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-2">Payload Verified</h3>
+                  <div className="flex items-center justify-center gap-2 text-[10px] font-mono text-zinc-500 mb-6 uppercase tracking-widest">
+                    <CheckCircle2 size={12} className="text-emerald-500" />
+                    Routing to internal desk
+                  </div>
+                  <p className="text-zinc-400 font-light text-sm mb-10 max-w-sm">
+                    Transmission received. Our operations team will parse your data and initialize contact shortly.
+                  </p>
+                  <button 
+                    onClick={() => setStatus("IDLE")}
+                    className="px-6 py-3 text-[11px] font-mono font-bold uppercase tracking-widest text-zinc-300 border border-zinc-800 bg-zinc-900 rounded hover:bg-zinc-800 hover:text-white transition-colors"
+                  >
+                    Initialize New Transmission
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className={`flex flex-col gap-8 transition-all duration-300 ${status === 'SUBMITTING' ? 'opacity-40 pointer-events-none scale-[0.98]' : 'opacity-100'}`}>
+                  
+                  {/* Form Header */}
+                  <div className="flex items-center gap-2 pb-4 mb-2 border-b border-zinc-800/50">
+                    <Activity size={14} className="text-[#C39967]" />
+                    <span className="text-[11px] font-mono font-bold uppercase text-zinc-300 tracking-widest">
+                      Transmission Protocol
+                    </span>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Focus-Within gives the label and border a synchronized active state */}
+                    <div className="flex flex-col gap-2 relative group focus-within:text-[#C39967]">
+                      <label htmlFor="name" className="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 transition-colors group-focus-within:text-[#C39967]">
+                        Entity / Full Name
+                      </label>
+                      <input 
+                        required
+                        type="text" 
+                        id="name"
+                        className="w-full bg-zinc-900 border border-zinc-800 focus:border-[#C39967] focus:ring-1 focus:ring-[#C39967]/20 rounded-lg px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-zinc-600"
+                        placeholder="e.g. Jane Doe"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-2 relative group focus-within:text-[#C39967]">
+                      <label htmlFor="email" className="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 transition-colors group-focus-within:text-[#C39967]">
+                        Return Route (Email)
+                      </label>
+                      <input 
+                        required
+                        type="email" 
+                        id="email"
+                        className="w-full bg-zinc-900 border border-zinc-800 focus:border-[#C39967] focus:ring-1 focus:ring-[#C39967]/20 rounded-lg px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-zinc-600"
+                        placeholder="jane@organization.com"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2 relative group focus-within:text-[#C39967]">
+                    <label htmlFor="subject" className="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 transition-colors group-focus-within:text-[#C39967]">
+                      Transmission Category
+                    </label>
+                    <select 
+                      id="subject"
+                      className="w-full bg-zinc-900 border border-zinc-800 focus:border-[#C39967] focus:ring-1 focus:ring-[#C39967]/20 rounded-lg px-4 py-3 text-sm text-white outline-none transition-all appearance-none cursor-pointer"
+                    >
+                      <option className="bg-zinc-900" value="partnership">System Integration / Partnership</option>
+                      <option className="bg-zinc-900" value="careers">Careers & Engineering Requisitions</option>
+                      <option className="bg-zinc-900" value="operations">Institutional Audit / Compliance</option>
+                      <option className="bg-zinc-900" value="other">General Operational Comms</option>
+                    </select>
+                  </div>
+
+                  <div className="flex flex-col gap-2 relative group focus-within:text-[#C39967]">
+                    <label htmlFor="message" className="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 transition-colors group-focus-within:text-[#C39967]">
+                      Payload (Message Details)
+                    </label>
+                    <textarea 
+                      required
+                      id="message"
+                      rows={5}
+                      className="w-full bg-zinc-900 border border-zinc-800 focus:border-[#C39967] focus:ring-1 focus:ring-[#C39967]/20 rounded-lg p-4 text-sm text-white outline-none transition-all resize-none placeholder:text-zinc-600"
+                      placeholder="Input operational request details here..."
+                    />
+                  </div>
+
+                  <div className="mt-4">
+                    <button 
+                      type="submit"
+                      disabled={status === "SUBMITTING"}
+                      className="w-full group flex items-center justify-center gap-3 py-4 bg-[#C39967] hover:bg-white text-black text-xs font-mono font-extrabold uppercase tracking-widest rounded-lg transition-colors duration-300 disabled:opacity-50"
+                    >
+                      {status === "SUBMITTING" ? (
+                        "Executing..."
+                      ) : (
+                        <>
+                          Execute Transmission
+                          <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                </form>
+              )}
+            </div>
+          </div>
+
         </div>
-
       </div>
     </section>
   );

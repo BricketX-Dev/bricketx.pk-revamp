@@ -80,11 +80,11 @@ export default function GlobalStructureSection() {
               The Structure
             </div>
             <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-              One Network — <span className="text-[#C39967]">Four Regions.</span>
+              One Network - <span className="text-[#C39967]">Four Regions.</span>
             </h2>
           </div>
           <p className="text-sm md:text-base text-zinc-400 max-w-md font-light leading-relaxed">
-            Each region owns a distinct role — and every one connects back to the Karachi hub, where the network is built and run.
+            Each region owns a distinct role - and every one connects back to the Karachi hub, where the network is built and run.
           </p>
         </div>
 

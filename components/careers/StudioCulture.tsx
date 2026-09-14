@@ -61,7 +61,7 @@ export default function StudioCulture() {
             </h2>
 
             <p className="studio-reveal text-base md:text-lg text-zinc-300 font-light leading-relaxed mb-6">
-              Inside the Karachi hub you&apos;ll find engineers, designers, marketers, and operators building side by side — coding, filming, designing, brainstorming, and shipping the systems that run the network.
+              Inside the Karachi hub you&apos;ll find engineers, designers, marketers, and operators building side by side - coding, filming, designing, brainstorming, and shipping the systems that run the network.
             </p>
 
             <p className="studio-reveal text-sm text-zinc-400 font-light leading-relaxed mb-8 border-l-2 border-[#C39967] pl-4">

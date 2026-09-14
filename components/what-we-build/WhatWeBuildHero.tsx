@@ -116,7 +116,7 @@ export default function WhatWeBuildHero() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-40 filter contrast-125 will-change-transform"
         >
-          <source src="/videos/what-we-build-hero-loop.mp4" type="video/mp4" />
+          <source src="/videos/what-we-build-hero.mp4" type="video/mp4" />
         </video>
 
         {/* Soft edge gradients to ensure text readability */}
@@ -157,7 +157,7 @@ export default function WhatWeBuildHero() {
 
         {/* Narrative Copy */}
         <p className="build-copy text-base sm:text-lg text-zinc-300 max-w-2xl font-light leading-relaxed mb-10">
-          BricketX Pakistan doesn&apos;t ship one-off deliverables. It builds and runs the infrastructure that keeps the entire BricketX network moving — from the portal investors log into to the tooling that runs behind the scenes.
+          BricketX Pakistan doesn&apos;t ship one-off deliverables. It builds and runs the infrastructure that keeps the entire BricketX network moving - from the portal investors log into to the tooling that runs behind the scenes.
         </p>
 
         {/* Operational Telemetry Readouts */}

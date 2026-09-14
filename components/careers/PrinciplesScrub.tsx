@@ -14,7 +14,7 @@ const principles = [
   {
     num: "01",
     title: "Educate First",
-    desc: "We teach before we sell — internally and to investors.",
+    desc: "We teach before we sell - internally and to investors.",
     tag: "PEDAGOGY",
   },
   {

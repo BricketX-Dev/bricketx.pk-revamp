@@ -153,7 +153,7 @@ export default function ContactGateway() {
             </h2>
 
             <p className="gateway-reveal text-base sm:text-lg text-[#5E646D] font-normal leading-relaxed max-w-lg mb-10">
-              Whether you&apos;re looking to partner with the operational hub, integrate our infrastructure, or join the team — the engine room is open.
+              Whether you&apos;re looking to partner with the operational hub, integrate our infrastructure, or join the team - the engine room is open.
             </p>
 
             {/* Hub Coordinates Strip */}

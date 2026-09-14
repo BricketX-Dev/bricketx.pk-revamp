@@ -39,7 +39,7 @@ const regions: OperationalRegion[] = [
     region: "Pakistan",
     tag: "CENTRAL OPERATIONS HUB",
     mandate: "Operations & Execution",
-    summary: "The Karachi hub — where it's built.",
+    summary: "The Karachi hub - where it's built.",
     roleDescription: "The engineering engine room of the entire network. Karachi drives full-stack software architecture, AI workflow pipelines, financial ledger engineering, and daily technical operations across every entity.",
     corePillars: [
       "Proprietary Platform Engineering",
@@ -191,7 +191,7 @@ export default function GlobalNetwork() {
             </h2>
           </div>
           <p className="global-reveal text-sm md:text-base text-[#5E646D] max-w-md font-normal leading-relaxed">
-            Every region owns a distinct role across governance, production, and leadership — synchronized through the central Karachi engine room.
+            Every region owns a distinct role across governance, production, and leadership - synchronized through the central Karachi engine room.
           </p>
         </div>
 

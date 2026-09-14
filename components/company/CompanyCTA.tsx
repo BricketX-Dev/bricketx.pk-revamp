@@ -17,7 +17,7 @@ export default function CompanyCTA() {
           See How The Network Runs
         </h2>
         <p className="text-sm md:text-base text-[#5E646D] font-normal max-w-xl mx-auto mb-10 leading-relaxed">
-          Explore the departments and systems behind BricketX — or get in touch with the hub.
+          Explore the departments and systems behind BricketX - or get in touch with the hub.
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-4">

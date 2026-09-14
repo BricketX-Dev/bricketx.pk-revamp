@@ -7,7 +7,7 @@ import CareersFAQ from "@/components/careers/CareersFAQ";
 import CareersCTA from "@/components/careers/CareersCTA";
 
 export const metadata: Metadata = {
-  title: "Culture & Careers // BricketX Pakistan",
+  title: "Culture & Careers - BricketX Pakistan",
   description: "The people behind the engine room. How we think, our operating values, and open positions across eight core disciplines.",
 };
 

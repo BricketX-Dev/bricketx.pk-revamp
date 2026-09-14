@@ -173,7 +173,7 @@ export default function Company() {
             
             <div className="company-reveal-left inline-flex items-center gap-2 px-3.5 py-1.5 mb-6 rounded-md border border-[#C39967]/40 bg-[#C39967]/10 text-xs font-mono font-semibold text-[#C39967] uppercase tracking-widest w-fit">
               <Terminal size={13} />
-              Institutional DNA // Karachi Node
+              Institutional DNA - Karachi Node
             </div>
 
             <h2 className="company-reveal-left text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-[0.98]">

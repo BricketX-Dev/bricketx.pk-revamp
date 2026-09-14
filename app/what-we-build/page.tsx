@@ -6,7 +6,7 @@ import WhatWeBuildFAQ from "@/components/what-we-build/WhatWeBuildFAQ";
 import WhatWeBuildCTA from "@/components/what-we-build/WhatWeBuildCTA";
 
 export const metadata: Metadata = {
-  title: "What We Build // BricketX Pakistan",
+  title: "What We Build - BricketX Pakistan",
   description: "Not Services. Systems. 10 core systems built in-house and maintained 24/7 by the Karachi engine room.",
 };
 

@@ -147,9 +147,9 @@ export default function Hero() {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-40 filter grayscale contrast-125 will-change-transform"
+          className="absolute inset-0 w-full h-full object-cover opacity-80 filter  contrast-125 will-change-transform"
         >
-          <source src="/videos/bricketx-3d-loop.mp4" type="video/mp4" />
+          <source src="/videos/home-hero.mp4" type="video/mp4" />
         </video>
         
         {/* Soft edge gradients to ensure text readability */}

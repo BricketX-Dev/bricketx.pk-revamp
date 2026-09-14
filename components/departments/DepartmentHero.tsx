@@ -129,7 +129,7 @@ export default function DepartmentsHero({ departments }: DepartmentsHeroProps) {
           playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-35 filter contrast-125 will-change-transform"
         >
-          <source src="/videos/departments-hero-loop.mp4" type="video/mp4" />
+          <source src="/videos/departments-hero.mp4" type="video/mp4" />
         </video>
 
         {/* Soft edge gradients to secure typography contrast */}
