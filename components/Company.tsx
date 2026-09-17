@@ -145,7 +145,7 @@ export default function Company() {
       ref={containerRef} 
       id="company" 
       onMouseMove={handleMouseMove}
-      className="relative w-full py-28 md:py-36 bg-[#050507] text-[#F4F5F7] border-y border-zinc-800/80 overflow-hidden select-none"
+      className="relative w-full py-16 md:py-20 bg-[#050507] text-[#F4F5F7] border-y border-zinc-800/80 overflow-hidden select-none"
     >
       {/* Precision Structural Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff04_1px,transparent_1px),linear-gradient(to_bottom,#ffffff04_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none opacity-80" />

@@ -87,7 +87,7 @@ export default function ContactGateway() {
       ref={containerRef}
       id="contact"
       onMouseMove={handleSectionMouseMove}
-      className="relative w-full py-28 md:py-36 bg-[#FAFBFD] text-[#18181B] border-t border-[#E8EBED] overflow-hidden select-none"
+      className="relative w-full py-16 md:py-20 bg-[#FAFBFD] text-[#18181B] border-t border-[#E8EBED] overflow-hidden select-none"
     >
       {/* Background Architectural Grid Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#E8EBED_1px,transparent_1px),linear-gradient(to_bottom,#E8EBED_1px,transparent_1px)] bg-[size:44px_44px] opacity-60 pointer-events-none" />

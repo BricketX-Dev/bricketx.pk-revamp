@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, MouseEvent } from "react";
+import { useRef, MouseEvent, UIEvent } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -67,46 +67,53 @@ export default function WhatWeBuild() {
       ease: "none",
     });
 
-    const track = trackRef.current;
-    if (!track || !pinViewportRef.current) return;
+    // 2. MatchMedia for Responsive GSAP Stacking (Desktop only)
+    let mm = gsap.matchMedia();
 
-    // Calculate total horizontal travel distance needed
-    const getScrollAmount = () => track.scrollWidth - window.innerWidth + (window.innerWidth < 768 ? 48 : 96);
+    mm.add("(min-width: 768px)", () => {
+      const track = trackRef.current;
+      if (!track || !pinViewportRef.current) return;
 
-    // 2. Pinned Horizontal Scroll Trigger
-    const horizontalTween = gsap.to(track, {
-      x: () => -getScrollAmount(),
-      ease: "none",
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: () => `+=${getScrollAmount()}`,
-        pin: pinViewportRef.current,
-        scrub: 0.8,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          // Dynamic progress bar width
-          const progressBar = document.getElementById("build-scroll-progress");
-          if (progressBar) {
-            progressBar.style.width = `${self.progress * 100}%`;
-          }
+      // Calculate total horizontal travel distance needed
+      const getScrollAmount = () => track.scrollWidth - window.innerWidth + 96;
 
-          // Dynamic active node counter
-          const activeNodeIndex = Math.min(
-            systems.length,
-            Math.max(1, Math.ceil(self.progress * systems.length))
-          );
-          const counterEl = document.getElementById("build-scroll-counter");
-          if (counterEl) {
-            counterEl.innerText = `${String(activeNodeIndex).padStart(2, "0")} / 10`;
-          }
+      // Pinned Horizontal Scroll Trigger
+      const horizontalTween = gsap.to(track, {
+        x: () => -getScrollAmount(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: () => `+=${getScrollAmount()}`,
+          pin: pinViewportRef.current,
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            // Dynamic progress bar width
+            const progressBar = document.getElementById("build-scroll-progress");
+            if (progressBar) {
+              progressBar.style.width = `${self.progress * 100}%`;
+            }
+
+            // Dynamic active node counter
+            const activeNodeIndex = Math.min(
+              systems.length,
+              Math.max(1, Math.ceil(self.progress * systems.length))
+            );
+            const counterEl = document.getElementById("build-scroll-counter");
+            if (counterEl) {
+              counterEl.innerText = `${String(activeNodeIndex).padStart(2, "0")} / 10`;
+            }
+          },
         },
-      },
+      });
+
+      return () => {
+        horizontalTween.kill();
+      };
     });
 
-    return () => {
-      horizontalTween.kill();
-    };
+    return () => mm.revert();
   }, { scope: containerRef });
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -128,6 +135,27 @@ export default function WhatWeBuild() {
     const y = e.clientY - rect.top;
     card.style.setProperty("--mouse-x", `${x}px`);
     card.style.setProperty("--mouse-y", `${y}px`);
+  };
+
+  // Mobile horizontal scroll progress handler
+  const handleMobileScroll = (e: UIEvent<HTMLDivElement>) => {
+    if (window.innerWidth >= 768) return; // Managed by GSAP on desktop
+    const container = e.currentTarget;
+    const scrollLeft = container.scrollLeft;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    const progress = maxScroll > 0 ? scrollLeft / maxScroll : 0;
+    
+    // Calculate active slide index based on scroll progress
+    const activeIndex = Math.min(
+      systems.length,
+      Math.max(1, Math.round(progress * (systems.length - 1)) + 1)
+    );
+    
+    const counterEl = document.getElementById("build-scroll-counter");
+    if (counterEl) counterEl.innerText = `${String(activeIndex).padStart(2, "0")} / 10`;
+    
+    const barEl = document.getElementById("build-scroll-progress");
+    if (barEl) barEl.style.width = `${progress * 100}%`;
   };
 
   return (
@@ -158,9 +186,7 @@ export default function WhatWeBuild() {
       {/* Pinned Target Viewport (Locks to screen while scrolling horizontally) */}
       <div 
         ref={pinViewportRef} 
-        // Changed: Replaced py-10 md:py-14 with pt-24 pb-10 md:pt-28 md:pb-14 
-        // to add extra space specifically at the top.
-        className="w-full h-screen max-h-[100dvh] flex flex-col justify-between pt-24 pb-10 md:pt-28 md:pb-14 overflow-hidden relative z-10"
+        className="w-full min-h-[90vh] md:h-screen max-h-[100dvh] flex flex-col justify-between pt-24 pb-10 md:pt-28 md:pb-14 overflow-hidden relative z-10"
       >
         {/* Top Header Strip */}
         <div className="container mx-auto px-6 md:px-12 max-w-7xl shrink-0">
@@ -178,10 +204,11 @@ export default function WhatWeBuild() {
         </div>
 
         {/* Horizontal Sliding Track */}
-        <div className="w-full my-auto overflow-visible pl-6 md:pl-12">
+        <div className="w-full my-auto overflow-visible relative">
           <div 
             ref={trackRef} 
-            className="flex gap-6 w-max pr-12 will-change-transform items-center"
+            onScroll={handleMobileScroll}
+            className="flex w-[calc(100%+3rem)] -ml-6 px-[10vw] md:w-max md:ml-0 md:pl-12 md:pr-12 md:px-0 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-4 md:gap-6 will-change-transform items-center [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] py-4"
           >
             {systems.map((system) => {
               const Icon = system.icon;
@@ -190,34 +217,34 @@ export default function WhatWeBuild() {
                 <div
                   key={system.id}
                   onMouseMove={handleCardMouseMove}
-                  className="w-[310px] sm:w-[360px] md:w-[410px] h-[360px] md:h-[390px] p-8 rounded-3xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl shadow-2xl flex flex-col justify-between overflow-hidden hover:border-[#C39967]/70 transition-colors group select-none"
+                  className="w-[80vw] md:w-[410px] shrink-0 snap-center h-[360px] md:h-[390px] p-7 md:p-8 rounded-3xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl shadow-2xl flex flex-col justify-between overflow-hidden hover:border-[#C39967]/70 transition-colors group select-none relative"
                   style={{
                     background: `radial-gradient(350px circle at var(--mouse-x, 150px) var(--mouse-y, 100px), rgba(195, 153, 103, 0.12), transparent 75%), rgba(18, 19, 24, 0.65)`,
                   }}
                 >
                   {/* Top Metadata Header */}
                   <div>
-                    <div className="flex items-center justify-between font-mono text-xs pb-4 mb-6 border-b border-zinc-800/70">
+                    <div className="flex items-center justify-between font-mono text-[10px] md:text-xs pb-4 mb-6 border-b border-zinc-800/70">
                       <span className="text-[#C39967] font-bold">NODE // {system.id}</span>
-                      <span className="text-[10px] uppercase font-mono font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/25 flex items-center gap-1.5">
+                      <span className="text-[9px] md:text-[10px] uppercase font-mono font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/25 flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                         Active
                       </span>
                     </div>
 
                     <div className="flex items-start justify-between gap-4 mb-5">
-                      <div className="w-13 h-13 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-[#C39967] shrink-0 group-hover:bg-[#C39967] group-hover:text-black transition-all duration-300">
+                      <div className="w-12 h-12 md:w-13 md:h-13 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-[#C39967] shrink-0 group-hover:bg-[#C39967] group-hover:text-black transition-all duration-300">
                         <Icon size={24} />
                       </div>
-                      <div className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white group-hover:border-[#C39967] transition-all shrink-0">
-                        <ArrowUpRight size={15} />
+                      <div className="w-7 h-7 md:w-8 md:h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white group-hover:border-[#C39967] transition-all shrink-0">
+                        <ArrowUpRight size={14} />
                       </div>
                     </div>
 
-                    <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-1">
+                    <span className="text-[9px] md:text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-1">
                       {system.tag}
                     </span>
-                    <h3 className="text-2xl font-extrabold text-white tracking-tight mb-2 group-hover:text-[#C39967] transition-colors">
+                    <h3 className="text-xl md:text-2xl font-extrabold text-white tracking-tight mb-2 group-hover:text-[#C39967] transition-colors">
                       {system.name}
                     </h3>
 
@@ -232,7 +259,7 @@ export default function WhatWeBuild() {
         </div>
 
         {/* Bottom Status Ticker & Interactive Progress Bar */}
-        <div className="container mx-auto px-6 md:px-12 max-w-7xl shrink-0">
+        <div className="container mx-auto px-6 md:px-12 max-w-7xl shrink-0 mt-4 md:mt-0">
           <div className="relative pt-4 border-t border-zinc-800/80">
             {/* Scroll Driven Gold Progress Indicator */}
             <div 
@@ -241,10 +268,11 @@ export default function WhatWeBuild() {
               style={{ width: "10%" }}
             />
 
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
+            <div className="flex items-center justify-between text-[10px] md:text-xs font-mono text-zinc-400">
               <span className="flex items-center gap-2">
                 <Activity size={13} className="text-[#C39967]" />
-                SCROLL DOWN TO ADVANCE ARCHITECTURAL NODES
+                <span className="hidden md:inline">SCROLL DOWN TO ADVANCE ARCHITECTURAL NODES</span>
+                <span className="md:hidden">SWIPE TO EXPLORE ARCHITECTURAL NODES</span>
               </span>
               <span id="build-scroll-counter" className="font-bold text-white">
                 01 / 10
