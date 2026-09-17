@@ -50,20 +50,22 @@ export default function DepartmentRequisitions() {
       className="py-24 md:py-32 bg-[#FAFBFD] text-[#18181B] border-b border-[#E8EBED]"
     >
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-3 rounded-md border border-[#E8EBED] bg-white text-xs font-mono font-bold text-[#5E646D] uppercase tracking-widest shadow-xs">
+        
+        {/* Updated Header Section */}
+        <div className="flex flex-col mb-16">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-4 rounded-md border border-[#E8EBED] bg-white text-xs font-mono font-bold text-[#5E646D] uppercase tracking-widest shadow-xs">
               <Briefcase size={13} className="text-[#C39967]" />
               Careers Directory
             </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-[#18181B]">
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-[#18181B] mb-5">
               Join The Team Building The Future <br className="hidden sm:block" />
               <span className="text-[#C39967]">Of Alternative Investments.</span>
             </h2>
+            <p className="text-sm md:text-base text-[#5E646D] max-w-xl font-normal leading-relaxed">
+              We hire across every department in the hub. Find the discipline that fits your capability and craft.
+            </p>
           </div>
-          <p className="text-sm md:text-base text-[#5E646D] max-w-md font-normal leading-relaxed">
-            We hire across every department in the hub. Find the discipline that fits your capability and craft.
-          </p>
         </div>
 
         {/* 8 Disciplines Matrix */}

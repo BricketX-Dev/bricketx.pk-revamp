@@ -187,10 +187,10 @@ export default function Hero() {
             The operational core of the global BricketX network, based in Karachi. Institutional engineering, liquidity workflows, and round-the-clock systems delivery.
           </p>
 
-          <div className="hero-actions flex flex-wrap items-center gap-4">
+          <div className="hero-actions flex flex-col sm:flex-row items-center gap-4 w-full">
             <a
               href="/departments"
-              className="group inline-flex items-center gap-3 px-7 py-3.5 bg-white text-black text-sm font-semibold hover:bg-[#e4e4e7] transition-colors rounded-sm"
+              className="group flex w-full sm:w-auto justify-center items-center gap-3 px-7 py-3.5 bg-white text-black text-sm font-semibold hover:bg-[#e4e4e7] transition-colors rounded-sm"
             >
               <span>Explore Departments</span>
               <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
@@ -198,7 +198,7 @@ export default function Hero() {
 
             <a
               href="/what-we-build"
-              className="inline-flex items-center gap-3 px-7 py-3.5 border border-[#27272a] hover:border-[#3f3f46] text-[#e4e4e7] text-sm font-medium transition-colors bg-[#0a0a0b]/60 backdrop-blur-md rounded-sm"
+              className="flex w-full sm:w-auto justify-center items-center gap-3 px-7 py-3.5 border border-[#27272a] hover:border-[#3f3f46] text-[#e4e4e7] text-sm font-medium transition-colors bg-[#0a0a0b]/60 backdrop-blur-md rounded-sm"
             >
               <Play size={12} className="fill-current text-[#c39967]" />
               <span>Systems Catalog</span>

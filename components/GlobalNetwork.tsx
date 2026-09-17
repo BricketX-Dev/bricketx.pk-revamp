@@ -187,28 +187,28 @@ export default function GlobalNetwork() {
       ref={containerRef} 
       id="global-network"
       onMouseMove={handleMouseMove}
-      className="relative py-28 md:py-36 bg-[#FAFBFD] text-[#18181B] border-y border-[#E8EBED] overflow-hidden select-none"
+      className="relative py-16 md:py-20 bg-[#FAFBFD] text-[#18181B] border-y border-[#E8EBED] overflow-hidden select-none"
     >
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#E8EBED_1px,transparent_1px),linear-gradient(to_bottom,#E8EBED_1px,transparent_1px)] bg-[size:48px_48px] opacity-70 pointer-events-none" />
       <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[800px] h-[400px] bg-[#C39967]/5 blur-[180px] pointer-events-none rounded-full" />
 
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
         
-        {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-8">
-          <div className="max-w-2xl">
+        {/* Updated Section Header */}
+        <div className="flex flex-col mb-16">
+          <div className="max-w-3xl">
             <div className="global-reveal inline-flex items-center gap-2 px-3.5 py-1.5 mb-4 rounded-md border border-[#C39967]/40 bg-[#FAF5EE] text-xs font-mono font-semibold text-[#C39967] uppercase tracking-widest shadow-xs">
               <Globe2 size={13} />
               Cross-Border Topology
             </div>
-            <h2 className="global-reveal text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#18181B] leading-tight">
+            <h2 className="global-reveal text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#18181B] leading-tight mb-5">
               One Network <br />
               <span className="text-[#C39967]">Four Regions</span>
             </h2>
+            <p className="global-reveal text-sm md:text-base text-[#5E646D] max-w-xl font-normal leading-relaxed">
+              Every region owns a distinct role across governance, production, and leadership — synchronized through the central Karachi engine room.
+            </p>
           </div>
-          <p className="global-reveal text-sm md:text-base text-[#5E646D] max-w-md font-normal leading-relaxed">
-            Every region owns a distinct role across governance, production, and leadership — synchronized through the central Karachi engine room.
-          </p>
         </div>
 
         {/* Master Operational Stage */}

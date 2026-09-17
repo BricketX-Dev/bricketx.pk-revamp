@@ -148,10 +148,10 @@ export default function WhatWeBuildHero() {
         {/* Masked Headline Reveal */}
         <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[0.95] max-w-4xl">
           <div className="overflow-hidden pb-1">
-            <span className="build-title-line block">Not Services.</span>
+            <span className="build-title-line block">Not Services</span>
           </div>
           <div className="overflow-hidden pb-1">
-            <span className="build-title-line block text-[#C39967]">Systems.</span>
+            <span className="build-title-line block text-[#C39967]">Systems</span>
           </div>
         </h1>
 
