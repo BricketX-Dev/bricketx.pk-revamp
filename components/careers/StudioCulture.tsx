@@ -99,8 +99,8 @@ export default function StudioCulture() {
             </div>
 
             <h2 className="studio-reveal text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-              No Stock Photos. <br />
-              <span className="text-[#C39967]">A Working Studio.</span>
+              Join The Team <br />
+              <span className="text-[#C39967]">Building The Future.</span>
             </h2>
 
             <p className="studio-reveal text-base md:text-lg text-zinc-300 font-light leading-relaxed mb-6">
