@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, MouseEvent } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -37,6 +37,49 @@ export default function StudioCulture() {
       }
     );
   }, { scope: container });
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Dynamic glow tracking
+    card.style.setProperty("--mouse-x", `${x}px`);
+    card.style.setProperty("--mouse-y", `${y}px`);
+
+    // 3D physics calculation
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -8;
+    const rotateY = ((x - centerX) / centerX) * 8;
+
+    gsap.to(card, {
+      rotateX,
+      rotateY,
+      z: 20,
+      scale: 1.02,
+      y: -8,
+      transformPerspective: 1000,
+      ease: "power2.out",
+      duration: 0.4,
+    });
+  };
+
+  const handleMouseLeave = (e: MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    
+    // Smooth reset
+    gsap.to(card, {
+      rotateX: 0,
+      rotateY: 0,
+      z: 0,
+      scale: 1,
+      y: 0,
+      ease: "power3.out",
+      duration: 0.7,
+    });
+  };
 
   return (
     <section
@@ -80,22 +123,31 @@ export default function StudioCulture() {
           </div>
 
           {/* Grid Blocks Column */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ perspective: "1200px" }}>
             {studioActivities.map((act, idx) => {
               const Icon = act.icon;
               return (
                 <div
                   key={idx}
-                  className="studio-reveal p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-md flex flex-col justify-between hover:border-[#C39967]/60 transition-all"
+                  onMouseMove={handleMouseMove}
+                  onMouseLeave={handleMouseLeave}
+                  className="studio-reveal group relative p-6 rounded-2xl border border-zinc-800/80 backdrop-blur-md flex flex-col justify-between hover:border-[#C39967]/70 hover:shadow-[0_30px_60px_-15px_rgba(195,153,103,0.25)] transition-[border-color,box-shadow] duration-500 ease-out cursor-pointer will-change-transform overflow-hidden min-h-[180px]"
+                  style={{
+                    background: `radial-gradient(400px circle at var(--mouse-x, 150px) var(--mouse-y, 100px), rgba(195, 153, 103, 0.15), transparent 70%), rgba(24, 24, 27, 0.6)`,
+                  }}
                 >
-                  <div className="w-10 h-10 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-[#C39967] mb-6">
-                    <Icon size={20} />
+                  {/* Animated Accent Line */}
+                  <div className="absolute top-0 left-0 w-full h-1 group-hover:h-1.5 bg-gradient-to-r from-[#C39967] via-[#C39967]/60 to-[#C39967]/10 opacity-30 group-hover:opacity-100 transition-[height,opacity] duration-500 ease-out pointer-events-none z-20" />
+
+                  <div className="relative z-10 w-12 h-12 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-[#C39967] mb-6 group-hover:bg-[#C39967] group-hover:text-zinc-950 group-hover:border-[#C39967] group-hover:shadow-[0_10px_20px_-5px_rgba(195,153,103,0.3)] transition-all duration-500 ease-out">
+                    <Icon size={22} className="transition-transform duration-500 group-hover:scale-110" />
                   </div>
-                  <div>
-                    <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-widest block mb-1">
+                  
+                  <div className="relative z-10 mt-auto">
+                    <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-widest block mb-1 group-hover:text-[#C39967]/80 transition-colors duration-300">
                       {act.count}
                     </span>
-                    <h3 className="text-lg font-bold text-white tracking-tight">
+                    <h3 className="text-lg font-bold text-white tracking-tight group-hover:text-[#C39967] transition-colors duration-300">
                       {act.label}
                     </h3>
                   </div>
