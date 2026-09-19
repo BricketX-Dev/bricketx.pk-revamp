@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Briefcase, ArrowUpRight } from "lucide-react";
-import ApplicationModal from "./ApplicationModal"; // Adjust path based on your folder structure
+import ApplicationModal from "./ApplicationModal"; 
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -25,7 +25,7 @@ const disciplines = [
 export default function DepartmentRequisitions() {
   const container = useRef<HTMLDivElement>(null);
   
-  // High-level state to manage modal visibility and target
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDeptId, setSelectedDeptId] = useState(disciplines[0].id);
 
@@ -98,7 +98,7 @@ export default function DepartmentRequisitions() {
     >
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         
-        {/* Header Section */}
+       
         <div className="flex flex-col mb-16">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-4 rounded-md border border-[#E8EBED] bg-white text-xs font-mono font-bold text-[#5E646D] uppercase tracking-widest shadow-xs">
@@ -115,7 +115,7 @@ export default function DepartmentRequisitions() {
           </div>
         </div>
 
-        {/* 8 Disciplines Matrix */}
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8" style={{ perspective: "1200px" }}>
           {disciplines.map((item, idx) => (
             <button

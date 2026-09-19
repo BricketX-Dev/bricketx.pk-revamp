@@ -110,21 +110,21 @@ export default function Footer() {
           
           {/* Column 1: Brand & Identity */}
           <div className="lg:col-span-4 flex flex-col">
-            <Link href="/" className="footer-reveal flex items-center gap-3.5 group mb-6 w-fit">
-              <div className="relative w-9 h-9 flex items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/60 p-1 group-hover:border-[#C39967]/50 transition-colors">
+            <Link href="/" className="footer-reveal flex items-center gap-3.5 group mb-8 w-fit">
+              <div className="relative w-14 h-14 flex items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/60 p-1 group-hover:border-[#C39967]/50 transition-colors shadow-lg">
                 <Image 
                   src="/images/logo/logo.png" 
                   alt="BricketX Logo" 
-                  width={36} 
-                  height={36} 
-                  className="object-contain group-hover:scale-105 transition-transform duration-300"
+                  width={56} 
+                  height={56} 
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="flex flex-col">
-                <span className="text-base font-extrabold tracking-wider text-white leading-tight font-sans">
+              <div className="flex flex-col justify-center">
+                <span className="text-2xl font-black tracking-wider text-white leading-tight font-sans">
                   BRICKETX
                 </span>
-                <span className="text-[10px] font-mono tracking-widest text-[#C39967] uppercase leading-none mt-0.5">
+                <span className="text-xs font-mono tracking-widest text-[#C39967] uppercase leading-none mt-1">
                   Operations Engine
                 </span>
               </div>
@@ -164,16 +164,16 @@ export default function Footer() {
 
           {/* Column 3: System Status */}
           <div className="lg:col-span-4 flex flex-col">
-            <div className="footer-reveal p-4 rounded-xl border border-zinc-800/80 bg-zinc-900/50 backdrop-blur-md">
-              <div className="flex items-center justify-between font-mono text-xs mb-3">
+            <div className="footer-reveal p-5 rounded-2xl border border-zinc-800/80 bg-zinc-900/50 backdrop-blur-md shadow-lg">
+              <div className="flex items-center justify-between font-mono text-xs mb-4">
                 <span className="text-zinc-500 uppercase tracking-widest">Network Status</span>
                 <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   ONLINE
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-xs text-zinc-400 font-light">
-                <Activity size={12} className="text-[#C39967]" />
+              <div className="flex items-center gap-2.5 text-sm text-zinc-400 font-light">
+                <Activity size={14} className="text-[#C39967]" />
                 Central cluster operational. Zero variance.
               </div>
             </div>
