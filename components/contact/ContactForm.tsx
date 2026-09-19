@@ -5,13 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { ArrowRight, CheckCircle2, Mail, MapPin, Activity } from "lucide-react";
-import { createClient } from "@supabase/supabase-js";
-
-// Initialize Supabase Client
-// Ensure you have NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your .env.local file
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { submitLeadAction } from "@/app/actions/contact"; // Adjust path to where you saved the server action
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -19,8 +13,12 @@ if (typeof window !== "undefined") {
 
 export default function ContactForm() {
   const container = useRef<HTMLDivElement>(null);
+  
   const [status, setStatus] = useState<"IDLE" | "SUBMITTING" | "SUCCESS" | "ERROR">("IDLE");
   const [errors, setErrors] = useState<{ email?: string; phone?: string }>({});
+  
+  // Strictly control the dropdown value
+  const [selectedService, setSelectedService] = useState("partnership");
 
   useGSAP(() => {
     gsap.fromTo(
@@ -47,12 +45,11 @@ export default function ContactForm() {
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const phone = formData.get("phone") as string;
-    const service = formData.get("service") as string;
     const message = formData.get("message") as string;
+    const site_origin = window.location.origin || "bricketx.pk";
 
     // Validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // Allows +, -, spaces, and digits (min 7, max 15 digits roughly)
     const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]{6,14}$/;
     
     let currentErrors: { email?: string; phone?: string } = {};
@@ -74,20 +71,19 @@ export default function ContactForm() {
     setStatus("SUBMITTING");
 
     try {
-      // Insert into Supabase matching your schema
-      const { error } = await supabase.from("leads").insert([
-        {
-          site_origin: window.location.origin || "bricketx",
-          form_type: "contact",
-          name: name,
-          email: email,
-          phone: phone || null, // Ensure empty strings are sent as null
-          service: service,
-          message: message,
-        }
-      ]);
+      // Execute the server action using the strict React state for service
+      const result = await submitLeadAction({
+        name,
+        email,
+        phone,
+        service: selectedService, 
+        message,
+        site_origin
+      });
 
-      if (error) throw error;
+      if (!result.success) {
+        throw new Error(result.error);
+      }
 
       setStatus("SUCCESS");
     } catch (error) {
@@ -163,27 +159,37 @@ export default function ContactForm() {
 
           {/* Right Column: Institutional Input Form */}
           <div className="lg:col-span-8 form-reveal">
-            <div className="bg-zinc-950 border border-zinc-800/80 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+            <div className="bg-zinc-950 border border-zinc-800/80 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden min-h-[500px] flex flex-col justify-center">
               
               {/* Subtle top inner gradient line */}
               <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#C39967]/30 to-transparent" />
 
               {status === "SUCCESS" ? (
-                // Success State
-                <div className="flex flex-col items-center justify-center text-center py-20 animate-in fade-in zoom-in duration-500">
-                  <div className="w-20 h-20 bg-zinc-900 rounded-full border border-emerald-500/40 flex items-center justify-center mb-6 relative">
-                    <div className="absolute inset-0 rounded-full border border-emerald-500 animate-ping opacity-20" />
-                    <CheckCircle2 size={32} className="text-emerald-500" />
+                // Premium Golden Success State
+                <div className="flex flex-col items-center justify-center text-center py-10 animate-in fade-in zoom-in duration-700 slide-in-from-bottom-4">
+                  <div className="w-24 h-24 bg-zinc-950/50 rounded-full border border-[#C39967]/30 flex items-center justify-center mb-8 relative shadow-[0_0_40px_-10px_rgba(195,153,103,0.3)]">
+                    {/* Layered expanding radar pulses */}
+                    <div className="absolute inset-0 rounded-full border border-[#C39967]/50 animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite] opacity-20" />
+                    <div className="absolute inset-2 rounded-full border border-[#C39967]/30 animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite_1s] opacity-20" />
+                    {/* Core Icon container */}
+                    <div className="w-16 h-16 bg-[#C39967]/10 rounded-full flex items-center justify-center border border-[#C39967]/50 backdrop-blur-sm">
+                      <CheckCircle2 size={32} className="text-[#C39967] drop-shadow-[0_0_10px_rgba(195,153,103,0.8)]" />
+                    </div>
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">Message Sent Successfully</h3>
-                  <p className="text-zinc-400 font-light text-sm mb-10 max-w-sm">
+                  
+                  <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-3 tracking-tight">Message Sent Successfully</h3>
+                  <p className="text-zinc-400 font-normal text-sm md:text-base mb-10 max-w-md leading-relaxed">
                     Thank you for reaching out. We have received your details and our team will get back to you shortly.
                   </p>
+                  
                   <button 
-                    onClick={() => setStatus("IDLE")}
-                    className="px-6 py-3 text-[11px] font-mono font-bold uppercase tracking-widest text-zinc-300 border border-zinc-800 bg-zinc-900 rounded hover:bg-zinc-800 hover:text-white transition-colors"
+                    onClick={() => {
+                      setStatus("IDLE");
+                      setSelectedService("partnership");
+                    }}
+                    className="group relative px-8 py-3.5 text-[11px] font-mono font-bold uppercase tracking-widest text-[#C39967] border border-[#C39967]/30 bg-[#C39967]/5 rounded-lg overflow-hidden transition-all duration-300 hover:border-[#C39967] hover:bg-[#C39967]/10 hover:shadow-[0_0_20px_rgba(195,153,103,0.2)]"
                   >
-                    Send Another Message
+                    <span className="relative z-10">Send Another Message</span>
                   </button>
                 </div>
               ) : (
@@ -247,9 +253,12 @@ export default function ContactForm() {
                       <label htmlFor="subject" className="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 transition-colors group-focus-within:text-[#C39967]">
                         Inquiry Type
                       </label>
+                      {/* React Controlled Component applied here */}
                       <select 
                         id="subject"
                         name="service"
+                        value={selectedService}
+                        onChange={(e) => setSelectedService(e.target.value)}
                         className="w-full bg-zinc-900 border border-zinc-800 focus:border-[#C39967] focus:ring-1 focus:ring-[#C39967]/20 rounded-lg px-4 py-3 text-sm text-white outline-none transition-all appearance-none cursor-pointer"
                       >
                         <option className="bg-zinc-900" value="partnership">System Integration / Partnership</option>
