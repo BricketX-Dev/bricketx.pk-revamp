@@ -78,6 +78,7 @@ export default function Navbar() {
   const navLinks = [
     { name: "Departments", href: "/departments" },
     { name: "What We Build", href: "/what-we-build" },
+    { name: "Blogs", href: "/blogs" }, // <-- Added here
     { name: "The Company", href: "/company" },
     { name: "Culture & Careers", href: "/careers" },
   ];
