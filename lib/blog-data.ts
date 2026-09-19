@@ -244,7 +244,7 @@ export const blogPosts: BlogPost[] = [
     date: "September 19, 2026",
     readTime: "9 min read",
     author: "Marketing Desk",
-    featureImage: "/images/blog/hero.webp",
+    featureImage: "/images/blog/advertising-compliance-shariah-investment/cover.webp",
     content: [
       {
         type: "paragraph",
@@ -272,7 +272,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "image",
-        src: "/images/blog/three-compliance-layers.svg",
+        src: "/images/blog/advertising-compliance-shariah-investment/three-compliance-layers.webp",
         alt: "Three stacked compliance layers: platform policy, financial regulatory, and Shariah governance",
         caption: "Fig. 02 - An ad for a Shariah-compliant platform has to clear all three layers, not just one"
       },
@@ -322,7 +322,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "image",
-        src: "/images/blog/compliance-checklist.svg",
+        src: "/images/blog/advertising-compliance-shariah-investment/compliance-checklist.webp",
         alt: "Pre-launch compliance checklist with four completed checks and one pending item",
         caption: "Fig. 04 - Four checks cleared; platform certification still pending before launch"
       },
@@ -389,7 +389,7 @@ export const blogPosts: BlogPost[] = [
     date: "September 19, 2026",
     readTime: "8 min read",
     author: "Operations Desk",
-    featureImage: "/images/blog/investor-relations-hero.jpg",
+    featureImage: "/images/blog/cover.webp",
     content: [
       {
         type: "paragraph",
@@ -455,7 +455,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "image",
-        src: "/images/blog/single-investor-view.svg",
+        src: "/images/blog/investor-relations-cross-border-fintech/four-system.webp",
         alt: "Diagram of four systems - CRM, reporting, communication, and compliance documentation - feeding into a single investor view",
         caption: "Fig. 03 - Four systems, one consistent record per investor regardless of region"
       },
@@ -501,7 +501,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "image",
-        src: "/images/blog/time-zones-coverage.svg",
+        src: "/images/blog/investor-relations-cross-border-fintech/time-zones-coverage.webp",
         alt: "Illustrative timeline showing overlapping business-hour coverage across Pakistan, Dubai, Kenya, and UK/BVI",
         caption: "Fig. 04 - Combined regional business hours, illustrative, not published support hours"
       },
