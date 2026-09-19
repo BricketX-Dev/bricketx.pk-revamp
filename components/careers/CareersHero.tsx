@@ -20,13 +20,13 @@ export default function CareersHero() {
   const yToSpot = useRef<gsap.QuickToFunc | null>(null);
 
   useGSAP(() => {
-    // 1. Interactive cursor spotlight physics
+    
     if (spotlightRef.current) {
       xToSpot.current = gsap.quickTo(spotlightRef.current, "x", { duration: 0.4, ease: "power2.out" });
       yToSpot.current = gsap.quickTo(spotlightRef.current, "y", { duration: 0.4, ease: "power2.out" });
     }
 
-    // 2. Subtle breathing scale on the 3D video render
+    
     if (videoRef.current) {
       gsap.to(videoRef.current, {
         scale: 1.06,
@@ -37,7 +37,7 @@ export default function CareersHero() {
       });
     }
 
-    // 3. Staggered Entrance Animation
+    
     const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
     tl.fromTo(
@@ -64,7 +64,7 @@ export default function CareersHero() {
         "-=0.4"
       );
 
-    // 4. Parallax Scroll Exit
+    
     const exitTl = gsap.timeline({
       scrollTrigger: {
         trigger: container.current,
