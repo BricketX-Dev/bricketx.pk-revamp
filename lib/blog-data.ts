@@ -31,7 +31,7 @@ export const blogPosts: BlogPost[] = [
     date: "September 19, 2026",
     readTime: "8 min read",
     author: "Technology Desk",
-    featureImage: "/images/blog/how-ai-automates-investor-research-reporting/cover.webp",
+    featureImage: "/images/blog/how-ai-automates-investor-research-reporting/feature.webp",
     content: [
       { 
         type: "paragraph", 

@@ -51,11 +51,11 @@ export default function Footer() {
           ease: "power3.out",
           scrollTrigger: {
             trigger: footerRef.current,
-            start: "top 95%", // Slightly more forgiving trigger area
+            start: "top 95%", 
           },
         }
       );
-    }, 400); // 400ms buffer guarantees the new route height is fully painted
+    }, 400); 
 
     return () => clearTimeout(timer);
   }, { scope: footerRef, dependencies: [pathname] });
