@@ -27,7 +27,7 @@ export default function ApplicationModal({ isOpen, onClose, initialDeptId, disci
   const [fileName, setFileName] = useState<string | null>(null);
   
   const [status, setStatus] = useState<"IDLE" | "SUBMITTING" | "SUCCESS" | "ERROR">("IDLE");
-  const [errors, setErrors] = useState<{ email?: string; phone?: string; file?: string }>({});
+  const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string; file?: string }>({});
 
   const [isVisible, setIsVisible] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -91,25 +91,38 @@ export default function ApplicationModal({ isOpen, onClose, initialDeptId, disci
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-    };
+    }
   }, [isDropdownOpen]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     const formData = new FormData(e.currentTarget);
+    const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const phone = formData.get("phone") as string;
     const file = formData.get("resume") as File;
     
     // Validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]{6,14}$/;
+    // Permissive global regex: accepts +, spaces, dashes, parentheses, and 7 to 20 digits
+    const phoneRegex = /^\+?[0-9\s\-().]{7,20}$/;
     
-    let currentErrors: { email?: string; phone?: string; file?: string } = {};
+    let currentErrors: { name?: string; email?: string; phone?: string; file?: string } = {};
 
-    if (!emailRegex.test(email)) currentErrors.email = "Invalid email format.";
-    if (phone && !phoneRegex.test(phone)) currentErrors.phone = "Invalid phone format.";
+    if (!name || name.trim() === "") {
+      currentErrors.name = "Full Name is required.";
+    }
+
+    if (!email || email.trim() === "") {
+      currentErrors.email = "Email Address is required.";
+    } else if (!emailRegex.test(email)) {
+      currentErrors.email = "Invalid format. E.g., jane@example.com";
+    }
+    
+    if (phone && !phoneRegex.test(phone)) {
+      currentErrors.phone = "Invalid format.";
+    }
     
     if (!file || file.size === 0) {
       currentErrors.file = "Please upload a resume.";
@@ -146,7 +159,6 @@ export default function ApplicationModal({ isOpen, onClose, initialDeptId, disci
     }
   };
 
-  // Determine if submit should be locked out (submitting or valid file error)
   const isSubmitLocked = status === "SUBMITTING" || (fileName !== null && errors.file !== undefined);
 
   if (!isOpen && !isVisible) return null;
@@ -180,7 +192,6 @@ export default function ApplicationModal({ isOpen, onClose, initialDeptId, disci
         <div className="p-5 md:px-7 md:py-6 overflow-y-auto custom-scrollbar flex-1 flex flex-col justify-center">
           
           {status === "SUCCESS" ? (
-             // Premium Golden Success State
              <div className="flex flex-col items-center justify-center text-center py-10 animate-in fade-in zoom-in duration-700 slide-in-from-bottom-4">
                <div className="w-24 h-24 bg-zinc-950/50 rounded-full border border-[#C39967]/30 flex items-center justify-center mb-8 relative shadow-[0_0_40px_-10px_rgba(195,153,103,0.3)]">
                  <div className="absolute inset-0 rounded-full border border-[#C39967]/50 animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite] opacity-20" />
@@ -203,7 +214,7 @@ export default function ApplicationModal({ isOpen, onClose, initialDeptId, disci
                </button>
              </div>
           ) : (
-            <form onSubmit={handleSubmit} className={`flex flex-col gap-5 transition-all duration-300 ${status === 'SUBMITTING' ? 'opacity-40 pointer-events-none scale-[0.98]' : 'opacity-100'}`}>
+            <form noValidate onSubmit={handleSubmit} className={`flex flex-col gap-5 transition-all duration-300 ${status === 'SUBMITTING' ? 'opacity-40 pointer-events-none scale-[0.98]' : 'opacity-100'}`}>
               
               {/* Custom Department Dropdown */}
               <div className="flex flex-col gap-1.5 z-30">
@@ -254,8 +265,18 @@ export default function ApplicationModal({ isOpen, onClose, initialDeptId, disci
                     type="text" 
                     name="name"
                     placeholder="Jane Doe"
-                    className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900/40 text-white placeholder-zinc-600 text-sm focus:bg-zinc-900/80 focus:outline-none focus:ring-[3px] focus:ring-[#C39967]/15 focus:border-[#C39967] transition-[border-color,box-shadow,background-color] duration-300 ease-out"
+                    className={`w-full px-4 py-3 rounded-xl border bg-zinc-900/40 text-white placeholder-zinc-600 text-sm focus:bg-zinc-900/80 focus:outline-none focus:ring-[3px] transition-[border-color,box-shadow,background-color] duration-300 ease-out
+                      ${errors.name ? 'border-red-500/50 bg-red-500/5 focus:ring-red-500/20' : 'border-zinc-800 focus:ring-[#C39967]/15 focus:border-[#C39967]'}
+                    `}
                   />
+                  {errors.name && (
+                    <div className="flex items-start gap-1.5 mt-1 animate-in fade-in slide-in-from-top-1 px-1">
+                      <span className="mt-0.5 text-red-400 shrink-0"><X size={12} strokeWidth={2.5} /></span>
+                      <span className="text-[11.5px] text-red-400/90 font-medium leading-tight">
+                        {errors.name}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label className="text-[13px] font-bold text-zinc-300">Email Address <span className="text-[#C39967]">*</span></label>
@@ -265,9 +286,17 @@ export default function ApplicationModal({ isOpen, onClose, initialDeptId, disci
                     name="email"
                     placeholder="jane@example.com"
                     className={`w-full px-4 py-3 rounded-xl border bg-zinc-900/40 text-white placeholder-zinc-600 text-sm focus:bg-zinc-900/80 focus:outline-none focus:ring-[3px] transition-[border-color,box-shadow,background-color] duration-300 ease-out
-                      ${errors.email ? 'border-red-500/50 focus:ring-red-500/20 focus:border-red-500' : 'border-zinc-800 focus:ring-[#C39967]/15 focus:border-[#C39967]'}
+                      ${errors.email ? 'border-red-500/50 focus:ring-red-500/20 bg-red-500/5' : 'border-zinc-800 focus:ring-[#C39967]/15 focus:border-[#C39967]'}
                     `}
                   />
+                  {errors.email && (
+                    <div className="flex items-start gap-1.5 mt-1 animate-in fade-in slide-in-from-top-1 px-1">
+                      <span className="mt-0.5 text-red-400 shrink-0"><X size={12} strokeWidth={2.5} /></span>
+                      <span className="text-[11.5px] text-red-400/90 font-medium leading-tight">
+                        {errors.email}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -277,11 +306,19 @@ export default function ApplicationModal({ isOpen, onClose, initialDeptId, disci
                 <input 
                   type="tel" 
                   name="phone"
-                  placeholder="+1 (555) 000-0000"
+                  placeholder="0300 1234567"
                   className={`w-full px-4 py-3 rounded-xl border bg-zinc-900/40 text-white placeholder-zinc-600 text-sm focus:bg-zinc-900/80 focus:outline-none focus:ring-[3px] transition-[border-color,box-shadow,background-color] duration-300 ease-out
-                    ${errors.phone ? 'border-red-500/50 focus:ring-red-500/20 focus:border-red-500' : 'border-zinc-800 focus:ring-[#C39967]/15 focus:border-[#C39967]'}
+                    ${errors.phone ? 'border-red-500/50 focus:ring-red-500/20 bg-red-500/5' : 'border-zinc-800 focus:ring-[#C39967]/15 focus:border-[#C39967]'}
                   `}
                 />
+                {errors.phone && (
+                  <div className="flex items-start gap-1.5 mt-1 animate-in fade-in slide-in-from-top-1 px-1">
+                    <span className="mt-0.5 text-red-400 shrink-0"><X size={12} strokeWidth={2.5} /></span>
+                    <span className="text-[11.5px] text-red-400/90 font-medium leading-tight">
+                      Invalid format. E.g., <span className="font-mono text-red-300 tracking-wide bg-red-500/10 px-1 py-0.5 rounded">03XX XXXXXXX</span> or <span className="font-mono text-red-300 tracking-wide bg-red-500/10 px-1 py-0.5 rounded">+92 3XX XXXXXXX</span>
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Resume Upload Dropzone */}

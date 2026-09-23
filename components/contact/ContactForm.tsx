@@ -4,7 +4,7 @@ import { useState, useRef, FormEvent } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { ArrowRight, CheckCircle2, Mail, MapPin, Activity } from "lucide-react";
+import { ArrowRight, CheckCircle2, Mail, MapPin, Activity, X } from "lucide-react";
 import { submitLeadAction } from "@/app/actions/contact"; // Adjust path to where you saved the server action
 
 if (typeof window !== "undefined") {
@@ -50,7 +50,8 @@ export default function ContactForm() {
 
     // Validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]{6,14}$/;
+    // Permissive global regex: accepts +, spaces, dashes, parentheses, and 7 to 20 digits
+    const phoneRegex = /^\+?[0-9\s\-().]{7,20}$/;
     
     let currentErrors: { email?: string; phone?: string } = {};
 
@@ -59,7 +60,7 @@ export default function ContactForm() {
     }
     
     if (phone && !phoneRegex.test(phone)) {
-      currentErrors.phone = "Please enter a valid phone number.";
+      currentErrors.phone = "Invalid format.";
     }
 
     if (Object.keys(currentErrors).length > 0) {
@@ -227,10 +228,17 @@ export default function ContactForm() {
                         type="email" 
                         id="email"
                         name="email"
-                        className={`w-full bg-zinc-900 border focus:ring-1 rounded-lg px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-zinc-600 ${errors.email ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/20' : 'border-zinc-800 focus:border-[#C39967] focus:ring-[#C39967]/20'}`}
+                        className={`w-full bg-zinc-900 border focus:ring-1 rounded-lg px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-zinc-600 ${errors.email ? 'border-red-500/50 bg-red-500/5 focus:border-red-500 focus:ring-red-500/20' : 'border-zinc-800 focus:border-[#C39967] focus:ring-[#C39967]/20'}`}
                         placeholder="jane@example.com"
                       />
-                      {errors.email && <span className="text-red-400 text-xs mt-1">{errors.email}</span>}
+                      {errors.email && (
+                        <div className="flex items-start gap-1.5 mt-1 animate-in fade-in slide-in-from-top-1 px-1">
+                          <span className="mt-0.5 text-red-400 shrink-0"><X size={12} strokeWidth={2.5} /></span>
+                          <span className="text-[11.5px] text-red-400/90 font-medium leading-tight">
+                            {errors.email}
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -243,10 +251,17 @@ export default function ContactForm() {
                         type="tel" 
                         id="phone"
                         name="phone"
-                        className={`w-full bg-zinc-900 border focus:ring-1 rounded-lg px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-zinc-600 ${errors.phone ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/20' : 'border-zinc-800 focus:border-[#C39967] focus:ring-[#C39967]/20'}`}
-                        placeholder="+1 (555) 000-0000"
+                        className={`w-full bg-zinc-900 border focus:ring-1 rounded-lg px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-zinc-600 ${errors.phone ? 'border-red-500/50 bg-red-500/5 focus:border-red-500 focus:ring-red-500/20' : 'border-zinc-800 focus:border-[#C39967] focus:ring-[#C39967]/20'}`}
+                        placeholder="0300 1234567"
                       />
-                      {errors.phone && <span className="text-red-400 text-xs mt-1">{errors.phone}</span>}
+                      {errors.phone && (
+                        <div className="flex items-start gap-1.5 mt-1 animate-in fade-in slide-in-from-top-1 px-1">
+                          <span className="mt-0.5 text-red-400 shrink-0"><X size={12} strokeWidth={2.5} /></span>
+                          <span className="text-[11.5px] text-red-400/90 font-medium leading-tight">
+                            Invalid format. E.g., <span className="font-mono text-red-300 tracking-wide bg-red-500/10 px-1 py-0.5 rounded">03XX XXXXXXX</span> or <span className="font-mono text-red-300 tracking-wide bg-red-500/10 px-1 py-0.5 rounded">+92 3XX XXXXXXX</span>
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     <div className="flex flex-col gap-2 relative group focus-within:text-[#C39967]">
