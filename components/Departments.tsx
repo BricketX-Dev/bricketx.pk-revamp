@@ -135,12 +135,15 @@ export default function Departments() {
       const cards = gsap.utils.toArray<HTMLElement>(".dept-card-wrapper");
       if (!cards.length || !pinTargetRef.current) return;
 
-      // Set initial desktop card states
+      // Add perspective to the parent container for a realistic 3D feel
+      gsap.set(scrollContainerRef.current, { perspective: 1200 });
+
+      // Anchor cards to the top center to prevent upward creeping, and set initial states
       cards.forEach((card, i) => {
         if (i !== 0) {
-          gsap.set(card, { yPercent: 100, autoAlpha: 1 });
+          gsap.set(card, { yPercent: 100, autoAlpha: 1, transformOrigin: "top center" });
         } else {
-          gsap.set(card, { yPercent: 0, autoAlpha: 1 });
+          gsap.set(card, { yPercent: 0, autoAlpha: 1, transformOrigin: "top center" });
         }
       });
 
@@ -149,9 +152,9 @@ export default function Departments() {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: () => `+=${cards.length * 100}%`,
+          end: () => `+=${cards.length * 150}%`, // Extended duration for even more scroll space per card
           pin: pinTargetRef.current,
-          scrub: 0.6,
+          scrub: 1.8, // Increased scrub value for ultra-smooth gliding
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const activeIndex = Math.min(
@@ -183,12 +186,14 @@ export default function Departments() {
         .to(
           prevCard,
           {
-            scale: 0.94,
-            opacity: 0.35,
+            scale: 0.92,
+            yPercent: 4, // Positive value pushes the card DOWN slightly, protecting the header gap
+            opacity: 0.3,
+            filter: "blur(4px)", // Increased blur for better depth of field
             ease: "none",
             duration: 1,
           },
-          "<"
+          "<" // Sync exact start times
         );
       });
     });
@@ -301,7 +306,6 @@ export default function Departments() {
         </div>
 
         {/* Card Stage Wrapper (Mobile Flex Row / Desktop Relative Stack) */}
-        {/* Updated widths, margins, paddings, and gap specific to mobile for proper peek-through effect */}
         <div 
           ref={scrollContainerRef}
           onScroll={handleMobileScroll}

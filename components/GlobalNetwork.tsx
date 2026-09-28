@@ -107,7 +107,7 @@ const regions: OperationalRegion[] = [
 export default function GlobalNetwork() {
   const [selectedRegion, setSelectedRegion] = useState<OperationalRegion>(regions[0]);
   const containerRef = useRef<HTMLDivElement>(null);
-  const mapCanvasRef = useRef<SVGSVGElement>(null);
+  const mapCanvasRef = useRef<HTMLDivElement>(null);
   const detailPaneRef = useRef<HTMLDivElement>(null);
 
   const xToMap = useRef<gsap.QuickToFunc | null>(null);
@@ -115,32 +115,10 @@ export default function GlobalNetwork() {
 
   useGSAP(() => {
     if (mapCanvasRef.current) {
+      gsap.set(mapCanvasRef.current, { scale: 1.05 });
       xToMap.current = gsap.quickTo(mapCanvasRef.current, "x", { duration: 0.9, ease: "power2.out" });
       yToMap.current = gsap.quickTo(mapCanvasRef.current, "y", { duration: 0.9, ease: "power2.out" });
     }
-
-    gsap.to(".network-conduit", {
-      strokeDashoffset: -60,
-      repeat: -1,
-      ease: "none",
-      duration: 2,
-    });
-
-    gsap.to(".orbit-spin", {
-      rotation: 360,
-      transformOrigin: "300px 300px",
-      duration: 90,
-      repeat: -1,
-      ease: "none",
-    });
-    
-    gsap.to(".orbit-spin-reverse", {
-      rotation: -360,
-      transformOrigin: "300px 300px",
-      duration: 120,
-      repeat: -1,
-      ease: "none",
-    });
 
     gsap.fromTo(
       ".global-reveal",
@@ -153,7 +131,8 @@ export default function GlobalNetwork() {
         ease: "power3.out",
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 75%",
+          start: "top 80%",
+          once: true,
         },
       }
     );
@@ -175,11 +154,8 @@ export default function GlobalNetwork() {
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-
-    xToMap.current?.(x * 0.02);
-    yToMap.current?.(y * 0.02);
+    xToMap.current?.((e.clientX - rect.left - rect.width / 2) * 0.02);
+    yToMap.current?.((e.clientY - rect.top - rect.height / 2) * 0.02);
   };
 
   return (
@@ -187,32 +163,36 @@ export default function GlobalNetwork() {
       ref={containerRef} 
       id="global-network"
       onMouseMove={handleMouseMove}
-      className="relative py-16 md:py-20 bg-[#FAFBFD] text-[#18181B] border-y border-[#E8EBED] overflow-hidden select-none"
+      className="relative py-16 md:py-20 bg-[#FAFBFD] text-[#18181B] border-y border-[#E8EBED] overflow-hidden select-none z-20"
     >
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#E8EBED_1px,transparent_1px),linear-gradient(to_bottom,#E8EBED_1px,transparent_1px)] bg-[size:48px_48px] opacity-70 pointer-events-none" />
-      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[800px] h-[400px] bg-[#C39967]/5 blur-[180px] pointer-events-none rounded-full" />
+      
+      <div 
+        className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none"
+        style={{ 
+          background: 'radial-gradient(circle, rgba(195,153,103,0.12) 0%, rgba(195,153,103,0) 65%)' 
+        }} 
+      />
 
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
         
-        {/* Updated Section Header */}
         <div className="flex flex-col mb-16">
           <div className="max-w-3xl">
-            <div className="global-reveal inline-flex items-center gap-2 px-3.5 py-1.5 mb-4 rounded-md border border-[#C39967]/40 bg-[#FAF5EE] text-xs font-mono font-semibold text-[#C39967] uppercase tracking-widest shadow-xs">
+            <div className="global-reveal opacity-0 inline-flex items-center gap-2 px-3.5 py-1.5 mb-4 rounded-md border border-[#C39967]/40 bg-[#FAF5EE] text-xs font-mono font-semibold text-[#C39967] uppercase tracking-widest shadow-xs">
               <Globe2 size={13} />
               Cross-Border Topology
             </div>
-            <h2 className="global-reveal text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#18181B] leading-tight mb-5">
+            <h2 className="global-reveal opacity-0 text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#18181B] leading-tight mb-5">
               One Network <br />
               <span className="text-[#C39967]">Four Regions</span>
             </h2>
-            <p className="global-reveal text-sm md:text-base text-[#5E646D] max-w-xl font-normal leading-relaxed">
+            <p className="global-reveal opacity-0 text-sm md:text-base text-[#5E646D] max-w-xl font-normal leading-relaxed">
               Every region owns a distinct role across governance, production, and leadership — synchronized through the central Karachi engine room.
             </p>
           </div>
         </div>
 
-        {/* Master Operational Stage */}
-        <div className="global-reveal rounded-3xl border border-[#E8EBED] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.04)] overflow-hidden mb-8">
+        <div className="global-reveal opacity-0 rounded-3xl border border-[#E8EBED] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.04)] overflow-hidden mb-8">
           
           <div className="px-6 py-4 border-b border-[#E8EBED] bg-[#FAFBFD] flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-[#5E646D]">
             <div className="flex items-center gap-2 text-[#18181B] font-bold">
@@ -227,135 +207,33 @@ export default function GlobalNetwork() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
             
-            {/* Left: The Dark Engineering Topology Canvas */}
-            <div className="lg:col-span-7 border-b lg:border-b-0 lg:border-r border-[#E8EBED] p-6 md:p-8 relative flex items-center justify-center bg-[#0a0a0b] overflow-hidden">
+            <div className="lg:col-span-7 border-b lg:border-b-0 lg:border-r border-[#E8EBED] relative bg-transparent overflow-hidden min-h-[400px]">
               
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#C39967]/15 blur-[120px] pointer-events-none rounded-full" />
-              
-              <svg
-                ref={mapCanvasRef}
-                viewBox="0 0 600 600"
-                className="w-full h-auto max-h-[500px] will-change-transform relative z-10"
-              >
-                <defs>
-                  <pattern id="darkTechGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" strokeWidth="1" strokeOpacity="0.05" />
-                  </pattern>
-                </defs>
+              <div ref={mapCanvasRef} className="absolute inset-0 w-full h-full z-10 will-change-transform">
+                <img 
+                  src="/images/home/Map.webp" 
+                  alt="Global Operational Network Map"
+                  className="w-full h-full object-cover object-center pointer-events-none" 
+                  decoding="async"
+                  fetchPriority="high"
+                />
 
-                <rect x="0" y="0" width="600" height="600" fill="url(#darkTechGrid)" />
-
-                {/* Abstract Data Orbits */}
-                <circle cx="300" cy="300" r="240" fill="none" stroke="#52525b" strokeWidth="1" strokeDasharray="4 16" opacity="0.4" className="orbit-spin-reverse" />
-                <circle cx="300" cy="300" r="160" fill="none" stroke="#C39967" strokeWidth="1" strokeDasharray="6 8" opacity="0.6" className="orbit-spin" />
-                <circle cx="300" cy="300" r="80" fill="none" stroke="#3f3f46" strokeWidth="1" strokeDasharray="2 4" opacity="0.6" />
-
-                {/* Crosshairs targeting the center */}
-                <line x1="300" y1="20" x2="300" y2="580" stroke="#27272a" strokeWidth="1.5" />
-                <line x1="20" y1="300" x2="580" y2="300" stroke="#27272a" strokeWidth="1.5" />
-
-                {/* Active Conduits linking satellites to Karachi (300, 300) */}
-                {regions.map((node) => {
-                  if (node.id === "01") return null; 
-                  const isSelected = selectedRegion.id === node.id || selectedRegion.id === "01";
-                  
-                  return (
-                    <g key={`conduit-${node.id}`}>
-                      {/* Base Line */}
-                      <line 
-                        x1="300" y1="300" x2={node.x} y2={node.y} 
-                        stroke="#C39967" strokeWidth="1" strokeOpacity={isSelected ? 0.6 : 0.2} 
-                      />
-                      {/* Animated Data Packets */}
-                      <line 
-                        x1="300" y1="300" x2={node.x} y2={node.y} 
-                        stroke="#C39967" strokeWidth="2.5" 
-                        strokeDasharray="4 40" 
-                        className="network-conduit" 
-                        strokeOpacity={isSelected ? 1 : 0.3} 
-                      />
-                    </g>
-                  );
-                })}
-
-                {/* Hub/Node Markers */}
-                {regions.map((node) => {
-                  const isSelected = selectedRegion.id === node.id;
-                  const isCentral = node.id === "01";
-
-                  return (
-                    <g 
-                      key={node.id} 
-                      onClick={() => handleSelectRegion(node)}
-                      className="cursor-pointer group"
-                    >
-                      {/* Outer Ring Ping */}
-                      {(isSelected || isCentral) && (
-                        <circle cx={node.x} cy={node.y} r={isCentral ? "28" : "20"} fill="#C39967" fillOpacity="0.25" className="animate-ping" />
-                      )}
-
-                      {/* Dark backing rect for clean text */}
-                      <rect 
-                        x={node.x - 35} 
-                        y={node.y + 12} 
-                        width="70" 
-                        height="30" 
-                        fill="#0a0a0b" 
-                        rx="4" 
-                        opacity={0.8}
-                        className="pointer-events-none"
-                      />
-
-                      {/* Main Node Point */}
-                      <circle
-                        cx={node.x}
-                        cy={node.y}
-                        r={isCentral ? "10" : "7"}
-                        fill={isCentral ? "#C39967" : isSelected ? "#ffffff" : "#18181b"}
-                        stroke={isCentral ? "#C39967" : isSelected ? "#C39967" : "#52525b"}
-                        strokeWidth="3"
-                        className="transition-all duration-300"
-                      />
-
-                      {/* Node Texts */}
-                      <text
-                        x={node.x}
-                        y={node.y + 26}
-                        textAnchor="middle"
-                        fill={isSelected || isCentral ? "#ffffff" : "#a1a1aa"}
-                        fontSize="12"
-                        fontWeight="bold"
-                        fontFamily="monospace"
-                        className="transition-colors duration-300"
-                      >
-                        {node.region.toUpperCase()}
-                      </text>
-                      
-                      <text
-                        x={node.x}
-                        y={node.y + 36}
-                        textAnchor="middle"
-                        fill={isSelected || isCentral ? "#C39967" : "#71717a"}
-                        fontSize="9"
-                        fontWeight="bold"
-                        fontFamily="monospace"
-                        className="transition-colors duration-300"
-                      >
-                        {isCentral ? "CORE" : `NODE ${node.id}`}
-                      </text>
-                    </g>
-                  );
-                })}
-              </svg>
-
-              <div className="absolute bottom-4 left-6 flex items-center gap-2 font-mono text-[10px] text-zinc-400 uppercase bg-zinc-900/80 px-2.5 py-1 rounded backdrop-blur-sm border border-zinc-800 z-20">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#C39967]" />
-                Select any terminal to view diagnostics
+                {regions.map((node) => (
+                  <div
+                    key={node.id}
+                    onClick={() => handleSelectRegion(node)}
+                    title={`View ${node.region} Diagnostics`}
+                    className="absolute cursor-pointer w-16 h-16 transform -translate-x-1/2 -translate-y-1/2 z-20 hover:bg-white/5 rounded-full transition-colors"
+                    style={{ 
+                      left: `${(node.x / 600) * 100}%`, 
+                      top: `${(node.y / 600) * 100}%` 
+                    }}
+                  />
+                ))}
               </div>
             </div>
 
-            {/* Right: Selected Node Briefing Pane (Remains White) */}
-            <div ref={detailPaneRef} className="lg:col-span-5 p-7 md:p-10 flex flex-col justify-between bg-white">
+            <div ref={detailPaneRef} className="lg:col-span-5 p-7 md:p-10 flex flex-col justify-between bg-white relative z-20">
               <div>
                 <div className="flex items-center justify-between font-mono text-xs pb-4 mb-6 border-b border-[#E8EBED]">
                   <span className="text-[#C39967] font-bold">
@@ -415,7 +293,6 @@ export default function GlobalNetwork() {
           </div>
         </div>
 
-        {/* 4 Regional Selector Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {regions.map((node) => {
             const isSelected = selectedRegion.id === node.id;
@@ -425,7 +302,7 @@ export default function GlobalNetwork() {
               <div
                 key={node.id}
                 onClick={() => handleSelectRegion(node)}
-                className={`global-reveal group cursor-pointer relative overflow-hidden p-6 rounded-2xl border transition-all duration-500 ease-out flex flex-col justify-between will-change-transform ${
+                className={`global-reveal opacity-0 group cursor-pointer relative overflow-hidden p-6 rounded-2xl border transition-all duration-500 ease-out flex flex-col justify-between ${
                   isSelected
                     ? "bg-white border-[#C39967]/60 shadow-[0_20px_60px_-15px_rgba(195,153,103,0.3)] -translate-y-1"
                     : "bg-white border-[#E8EBED] hover:border-[#C39967]/50 shadow-sm hover:shadow-[0_20px_60px_-15px_rgba(195,153,103,0.2)] hover:-translate-y-1"
