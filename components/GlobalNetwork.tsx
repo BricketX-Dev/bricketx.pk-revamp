@@ -188,15 +188,68 @@ export default function GlobalNetwork() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#C39967]/15 blur-[120px] pointer-events-none rounded-full" />
               
               {/* Image Wrapper */}
-              <div className="absolute inset-0 w-full h-full flex items-center justify-center z-10">
-                <img 
-                  src="/images/home/Map.webp" 
-                  alt="Global Operational Network Map"
-                  className="w-full h-full object-cover pointer-events-none opacity-80" 
-                  decoding="async"
-                  fetchPriority="high"
+                          
+            <div className="absolute inset-0 w-full h-full flex items-center justify-center z-10">
+              <img 
+                src="/images/home/Map.webp" 
+                alt="Global Operational Network Map"
+                className="w-full h-full object-cover object-[80%_center] pointer-events-none opacity-80" 
+                decoding="async"
+                fetchPriority="high"
+              />
+              
+              {/* --- ANIMATED DATA STREAMS OVERLAY --- */}
+              {/* You may need to tweak the viewBox and path coordinates (M = start, Q = curve, ending coordinates) to perfectly align with your specific image's static lines */}
+              <svg 
+              className="absolute inset-0 w-full h-full z-20 pointer-events-none" 
+              viewBox="0 0 1000 500" 
+              preserveAspectRatio="xMidYMid slice"
+              style={{ filter: "drop-shadow(0px 4px 6px rgba(0,0,0,0.3))" }}
+            >
+              <defs>
+                {/* Updated gradient: Bright white center fading into the brand gold */}
+                <radialGradient id="particle-glow">
+                  <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
+                  <stop offset="40%" stopColor="#C39967" stopOpacity="0.9" />
+                  <stop offset="100%" stopColor="#C39967" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+
+              {/* Enhanced Pulsing Core at Pakistan */}
+              <circle cx="765" cy="230" r="15" fill="none" stroke="#FFFFFF" strokeWidth="2" opacity="0.8">
+                <animate attributeName="r" values="5; 45" dur="2s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.8; 0" dur="2s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="765" cy="230" r="5" fill="#FFFFFF" stroke="#C39967" strokeWidth="2" />
+
+              {/* Moving Particle: UK to Pakistan */}
+              <circle r="5" fill="url(#particle-glow)">
+                <animateMotion 
+                  dur="2.5s" 
+                  repeatCount="indefinite" 
+                  path="M 510 100 Q 580 45 765 230" 
                 />
-              </div>
+              </circle>
+
+              {/* Moving Particle: USA to Pakistan */}
+              <circle r="5.5" fill="url(#particle-glow)">
+                <animateMotion 
+                  dur="3s" 
+                  repeatCount="indefinite" 
+                  path="M 230 220 Q 400 140 765 230" 
+                />
+              </circle>
+
+              {/* Moving Particle: Kenya to Pakistan */}
+              <circle r="4.5" fill="url(#particle-glow)">
+                <animateMotion 
+                  dur="2.2s" 
+                  repeatCount="indefinite" 
+                  path="M 660 380 Q 855 350 765 230" 
+                />
+              </circle>
+            </svg>
+            </div>
 
               {/* Shiner Effect Layer - Updated for smoothness and premium feel */}
               <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden">
