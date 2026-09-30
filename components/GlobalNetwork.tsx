@@ -109,6 +109,9 @@ export default function GlobalNetwork() {
   const containerRef = useRef<HTMLDivElement>(null);
   const detailPaneRef = useRef<HTMLDivElement>(null);
 
+  // We use the Pakistan content to anchor the container height perfectly
+  const ghostRegion = regions[0];
+
   useGSAP(() => {
     gsap.fromTo(
       ".global-reveal",
@@ -187,132 +190,147 @@ export default function GlobalNetwork() {
               
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#C39967]/15 blur-[120px] pointer-events-none rounded-full" />
               
-              {/* Image Wrapper */}
-                          
-            <div className="absolute inset-0 w-full h-full flex items-center justify-center z-10">
-              <img 
-                src="/images/home/Map.webp" 
-                alt="Global Operational Network Map"
-                className="w-full h-full object-cover object-[80%_center] pointer-events-none opacity-80" 
-                decoding="async"
-                fetchPriority="high"
-              />
-              
-              {/* --- ANIMATED DATA STREAMS OVERLAY --- */}
-              {/* You may need to tweak the viewBox and path coordinates (M = start, Q = curve, ending coordinates) to perfectly align with your specific image's static lines */}
-              <svg 
-              className="absolute inset-0 w-full h-full z-20 pointer-events-none" 
-              viewBox="0 0 1000 500" 
-              preserveAspectRatio="xMidYMid slice"
-              style={{ filter: "drop-shadow(0px 4px 6px rgba(0,0,0,0.3))" }}
-            >
-              <defs>
-                {/* Updated gradient: Bright white center fading into the brand gold */}
-                <radialGradient id="particle-glow">
-                  <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
-                  <stop offset="40%" stopColor="#C39967" stopOpacity="0.9" />
-                  <stop offset="100%" stopColor="#C39967" stopOpacity="0" />
-                </radialGradient>
-              </defs>
-
-              {/* Enhanced Pulsing Core at Pakistan */}
-              <circle cx="765" cy="230" r="15" fill="none" stroke="#FFFFFF" strokeWidth="2" opacity="0.8">
-                <animate attributeName="r" values="5; 45" dur="2s" repeatCount="indefinite" />
-                <animate attributeName="opacity" values="0.8; 0" dur="2s" repeatCount="indefinite" />
-              </circle>
-              <circle cx="765" cy="230" r="5" fill="#FFFFFF" stroke="#C39967" strokeWidth="2" />
-
-              {/* Moving Particle: UK to Pakistan */}
-              <circle r="5" fill="url(#particle-glow)">
-                <animateMotion 
-                  dur="2.5s" 
-                  repeatCount="indefinite" 
-                  path="M 510 100 Q 580 45 765 230" 
+              <div className="absolute inset-0 w-full h-full flex items-center justify-center z-10">
+                <img 
+                  src="/images/home/Map.webp" 
+                  alt="Global Operational Network Map"
+                  className="w-full h-full object-cover object-[80%_center] pointer-events-none opacity-80" 
+                  decoding="async"
+                  fetchPriority="high"
                 />
-              </circle>
+                
+                <svg 
+                  className="absolute inset-0 w-full h-full z-20 pointer-events-none" 
+                  viewBox="0 0 1000 500" 
+                  preserveAspectRatio="xMidYMid slice"
+                  style={{ filter: "drop-shadow(0px 4px 6px rgba(0,0,0,0.3))" }}
+                >
+                  <defs>
+                    <radialGradient id="particle-glow">
+                      <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
+                      <stop offset="40%" stopColor="#C39967" stopOpacity="0.9" />
+                      <stop offset="100%" stopColor="#C39967" stopOpacity="0" />
+                    </radialGradient>
+                  </defs>
 
-              {/* Moving Particle: USA to Pakistan */}
-              <circle r="5.5" fill="url(#particle-glow)">
-                <animateMotion 
-                  dur="3s" 
-                  repeatCount="indefinite" 
-                  path="M 230 220 Q 400 140 765 230" 
-                />
-              </circle>
+                  <circle cx="770" cy="230" r="15" fill="none" stroke="#FFFFFF" strokeWidth="2" opacity="0.8">
+                    <animate attributeName="r" values="5; 45" dur="2s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.8; 0" dur="2s" repeatCount="indefinite" />
+                  </circle>
+                  <circle cx="770" cy="230" r="5" fill="#FFFFFF" stroke="#C39967" strokeWidth="2" />
 
-              {/* Moving Particle: Kenya to Pakistan */}
-              <circle r="4.5" fill="url(#particle-glow)">
-                <animateMotion 
-                  dur="2.2s" 
-                  repeatCount="indefinite" 
-                  path="M 660 380 Q 855 350 765 230" 
-                />
-              </circle>
-            </svg>
-            </div>
+                  <circle r="5" fill="url(#particle-glow)">
+                    <animateMotion dur="2.5s" repeatCount="indefinite" path="M 510 100 Q 580 45 770 230" />
+                  </circle>
 
-              {/* Shiner Effect Layer - Updated for smoothness and premium feel */}
+                  <circle r="5.5" fill="url(#particle-glow)">
+                    <animateMotion dur="3s" repeatCount="indefinite" path="M 230 220 Q 400 140 770 230" />
+                  </circle>
+
+                  <circle r="4.5" fill="url(#particle-glow)">
+                    <animateMotion dur="2.2s" repeatCount="indefinite" path="M 660 380 Q 855 350 770 230" />
+                  </circle>
+                </svg>
+              </div>
+
               <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden">
                 <div className="absolute top-0 bottom-0 -left-[150%] w-[100%] bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-[25deg] transition-all duration-[1.5s] ease-in-out group-hover/canvas:left-[150%]" />
               </div>
-
             </div>
 
             {/* Right: Selected Node Briefing Pane */}
-            <div ref={detailPaneRef} className="lg:col-span-5 p-7 md:p-10 flex flex-col justify-between bg-white relative z-20">
-              <div>
-                <div className="flex items-center justify-between font-mono text-xs pb-4 mb-6 border-b border-[#E8EBED]">
-                  <span className="text-[#C39967] font-bold">
-                    {selectedRegion.id === "01" ? "CORE PLATFORM // KHI-01" : `NODE ${selectedRegion.id} // REGION`}
-                  </span>
-                  <span className="text-[10px] font-bold text-[#18181B] px-2.5 py-0.5 rounded bg-[#FAFBFD] border border-[#E8EBED] uppercase">
-                    {selectedRegion.tag}
-                  </span>
+            <div className="lg:col-span-5 bg-white relative z-20 overflow-hidden">
+              
+              {/* --- GHOST ELEMENT --- */}
+              <div className="p-7 md:p-10 flex flex-col justify-between invisible pointer-events-none" aria-hidden="true">
+                <div>
+                  <div className="flex items-center justify-between font-mono text-xs pb-4 mb-6 border-b border-[#E8EBED]">
+                    <span className="font-bold">CORE PLATFORM // KHI-01</span>
+                    <span className="text-[10px] font-bold px-2.5 py-0.5 rounded border">{ghostRegion.tag}</span>
+                  </div>
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-xl border flex items-center justify-center shrink-0">
+                      <ghostRegion.icon size={22} />
+                    </div>
+                    <div>
+                      <span className="text-xs font-mono uppercase font-bold block mb-0.5">{ghostRegion.mandate}</span>
+                      <h3 className="text-3xl font-black">{ghostRegion.region}</h3>
+                    </div>
+                  </div>
+                  <p className="text-sm font-semibold mb-2">{ghostRegion.summary}</p>
+                  <p className="text-sm font-normal leading-relaxed mb-6">{ghostRegion.roleDescription}</p>
+                  <div className="pt-5 border-t border-[#E8EBED]">
+                    <span className="text-[10px] font-mono uppercase font-bold block mb-3">Pillars</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {ghostRegion.corePillars.map((item, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-xs"><span>{item}</span></div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#FAF5EE] border border-[#C39967]/30 flex items-center justify-center text-[#C39967] shrink-0 shadow-xs">
-                    <selectedRegion.icon size={22} />
-                  </div>
-                  <div>
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#C39967] font-bold block mb-0.5">
-                      {selectedRegion.mandate}
-                    </span>
-                    <h3 className="text-3xl font-black text-[#18181B] tracking-tight">
-                      {selectedRegion.region}
-                    </h3>
-                  </div>
-                </div>
-
-                <p className="text-sm font-semibold text-[#18181B] mb-2">
-                  {selectedRegion.summary}
-                </p>
-
-                <p className="text-sm text-[#5E646D] font-normal leading-relaxed mb-6">
-                  {selectedRegion.roleDescription}
-                </p>
-
-                <div className="pt-5 border-t border-[#E8EBED]">
-                  <span className="text-[10px] font-mono uppercase tracking-widest font-bold text-[#A5ADB6] block mb-3">
-                    Key Operational Responsibilities
-                  </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {selectedRegion.corePillars.map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs text-[#18181B]">
-                        <CheckCircle2 size={13} className="text-[#C39967] shrink-0" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
+                <div className="pt-6 mt-8 border-t border-[#E8EBED] flex items-center justify-between text-xs">
+                  <span>INFRASTRUCTURE</span><span>ACTIVE</span>
                 </div>
               </div>
 
-              <div className="pt-6 mt-8 border-t border-[#E8EBED] flex items-center justify-between text-xs font-mono text-[#5E646D]">
-                <span className="flex items-center gap-1.5">
-                  <Layers size={13} className="text-[#C39967]" />
-                  SYNCHRONIZED INFRASTRUCTURE
-                </span>
-                <span className="text-[#A5ADB6]">STATUS: ACTIVE</span>
+              {/* --- ACTUAL VISIBLE CONTENT --- 
+                  Changed overflow-y-auto to overflow-hidden here
+              */}
+              <div ref={detailPaneRef} className="absolute inset-0 p-7 md:p-10 flex flex-col justify-between overflow-hidden">
+                <div>
+                  <div className="flex items-center justify-between font-mono text-xs pb-4 mb-6 border-b border-[#E8EBED]">
+                    <span className="text-[#C39967] font-bold">
+                      {selectedRegion.id === "01" ? "CORE PLATFORM // KHI-01" : `NODE ${selectedRegion.id} // REGION`}
+                    </span>
+                    <span className="text-[10px] font-bold text-[#18181B] px-2.5 py-0.5 rounded bg-[#FAFBFD] border border-[#E8EBED] uppercase">
+                      {selectedRegion.tag}
+                    </span>
+                  </div>
+
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-[#FAF5EE] border border-[#C39967]/30 flex items-center justify-center text-[#C39967] shrink-0 shadow-xs">
+                      <selectedRegion.icon size={22} />
+                    </div>
+                    <div>
+                      <span className="text-xs font-mono uppercase tracking-wider text-[#C39967] font-bold block mb-0.5">
+                        {selectedRegion.mandate}
+                      </span>
+                      <h3 className="text-3xl font-black text-[#18181B] tracking-tight">
+                        {selectedRegion.region}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <p className="text-sm font-semibold text-[#18181B] mb-2">
+                    {selectedRegion.summary}
+                  </p>
+
+                  <p className="text-sm text-[#5E646D] font-normal leading-relaxed mb-6">
+                    {selectedRegion.roleDescription}
+                  </p>
+
+                  <div className="pt-5 border-t border-[#E8EBED]">
+                    <span className="text-[10px] font-mono uppercase tracking-widest font-bold text-[#A5ADB6] block mb-3">
+                      Key Operational Responsibilities
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {selectedRegion.corePillars.map((item, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-xs text-[#18181B]">
+                          <CheckCircle2 size={13} className="text-[#C39967] shrink-0" />
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-6 mt-8 border-t border-[#E8EBED] flex items-center justify-between text-xs font-mono text-[#5E646D]">
+                  <span className="flex items-center gap-1.5">
+                    <Layers size={13} className="text-[#C39967]" />
+                    SYNCHRONIZED INFRASTRUCTURE
+                  </span>
+                  <span className="text-[#A5ADB6]">STATUS: ACTIVE</span>
+                </div>
               </div>
             </div>
 
