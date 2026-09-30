@@ -190,7 +190,19 @@ export default function GlobalNetwork() {
               
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#C39967]/15 blur-[120px] pointer-events-none rounded-full" />
               
-              <div className="absolute inset-0 w-full h-full flex items-center justify-center z-10">
+              {/* --- MOBILE VIEW: Simple static image without SVGs --- */}
+              <div className="absolute inset-0 w-full h-full flex lg:hidden items-center justify-center z-10">
+                <img 
+                  src="/images/home/Map-mobile.webp" 
+                  alt="Global Operational Network Map"
+                  className="w-full h-full object-contain pointer-events-none opacity-80" 
+                  decoding="async"
+                  fetchPriority="high"
+                />
+              </div>
+
+              {/* --- DESKTOP VIEW: Original image + animated SVGs --- */}
+              <div className="absolute inset-0 w-full h-full hidden lg:flex items-center justify-center z-10">
                 <img 
                   src="/images/home/Map.webp" 
                   alt="Global Operational Network Map"
@@ -213,26 +225,27 @@ export default function GlobalNetwork() {
                     </radialGradient>
                   </defs>
 
-                  <circle cx="770" cy="230" r="15" fill="none" stroke="#FFFFFF" strokeWidth="2" opacity="0.8">
+                  <circle cx="772" cy="233" r="15" fill="none" stroke="#FFFFFF" strokeWidth="2" opacity="0.8">
                     <animate attributeName="r" values="5; 45" dur="2s" repeatCount="indefinite" />
                     <animate attributeName="opacity" values="0.8; 0" dur="2s" repeatCount="indefinite" />
                   </circle>
-                  <circle cx="770" cy="230" r="5" fill="#FFFFFF" stroke="#C39967" strokeWidth="2" />
+                  <circle cx="772" cy="233" r="5" fill="#FFFFFF" stroke="#C39967" strokeWidth="2" />
 
                   <circle r="5" fill="url(#particle-glow)">
-                    <animateMotion dur="2.5s" repeatCount="indefinite" path="M 510 100 Q 580 45 770 230" />
+                    <animateMotion dur="2.5s" repeatCount="indefinite" path="M 510 100 Q 580 45 772 233" />
                   </circle>
 
                   <circle r="5.5" fill="url(#particle-glow)">
-                    <animateMotion dur="3s" repeatCount="indefinite" path="M 230 220 Q 400 140 770 230" />
+                    <animateMotion dur="3s" repeatCount="indefinite" path="M 230 220 Q 400 140 772 233" />
                   </circle>
 
                   <circle r="4.5" fill="url(#particle-glow)">
-                    <animateMotion dur="2.2s" repeatCount="indefinite" path="M 660 380 Q 855 350 770 230" />
+                    <animateMotion dur="2.2s" repeatCount="indefinite" path="M 660 380 Q 855 350 772 233" />
                   </circle>
                 </svg>
               </div>
 
+              {/* Shiner effect wrapper remains for both layouts */}
               <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden">
                 <div className="absolute top-0 bottom-0 -left-[150%] w-[100%] bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-[25deg] transition-all duration-[1.5s] ease-in-out group-hover/canvas:left-[150%]" />
               </div>
@@ -273,9 +286,7 @@ export default function GlobalNetwork() {
                 </div>
               </div>
 
-              {/* --- ACTUAL VISIBLE CONTENT --- 
-                  Changed overflow-y-auto to overflow-hidden here
-              */}
+              {/* --- ACTUAL VISIBLE CONTENT --- */}
               <div ref={detailPaneRef} className="absolute inset-0 p-7 md:p-10 flex flex-col justify-between overflow-hidden">
                 <div>
                   <div className="flex items-center justify-between font-mono text-xs pb-4 mb-6 border-b border-[#E8EBED]">
