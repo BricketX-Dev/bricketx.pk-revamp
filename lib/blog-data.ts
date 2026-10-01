@@ -561,5 +561,176 @@ export const blogPosts: BlogPost[] = [
         text: "Investor relations in a cross-border fintech network is the same core job as in any single-market firm - onboarding, communication, reporting, support - made harder by regulation, currency, and time zone differences that don't resolve themselves. The networks that handle it well don't staff their way through the complexity; they build the CRM, reporting, and communication systems that keep one investor record consistent no matter which region is looking at it."
       }
     ]
-  }
+  },
+
+{
+    slug: "idea-to-scale-operating-model",
+    title: "Idea-to-Scale: Inside BricketX's 5-Step Operating Model",
+    excerpt: "Research, Design, Build, Launch, Run - the same fixed path every project moves through, each step owned by a different department.",
+    category: "Company · Operating Model",
+    date: "September 19, 2026",
+    readTime: "9 min read",
+    author: "Production Desk",
+    featureImage: "/images/blog/idea-to-scale-operating-model/cover.webp",
+    content: [
+      {
+        type: "paragraph",
+        text: "BricketX's operating model moves every project through the same five steps regardless of which department leads it: Research, Design, Build, Launch, and Run. Each step is owned by a specific department, so a project has one deterministic path from idea to a live system in front of real users - not an ad hoc process that looks different depending on who's running it."
+      },
+      {
+        type: "h2",
+        text: "What \"idea-to-scale\" actually means"
+      },
+      {
+        type: "paragraph",
+        text: "Most companies describe their process in general terms - \"we move fast,\" \"we're agile\" - without a fixed sequence anyone could point to. BricketX's model is the opposite: a named, five-step path that every initiative runs through in the same order, whether it's a new investor-facing product, an internal tool, or an infrastructure upgrade. The benefit isn't rigidity for its own sake - it's that precision, auditability, and speed all improve when the path is known in advance instead of negotiated fresh every time."
+      },
+      {
+        type: "image",
+        src: "/images/blog/idea-to-scale-operating-model/five-step-pipeline.webp",
+        alt: "Five-step operating model pipeline: research, design, build, launch, run, each labeled with its owning department",
+        caption: "Fig. 01 - The same five-step path, department-owned, on every project"
+      },
+      {
+        type: "h2",
+        text: "The five steps, in order"
+      },
+      {
+        type: "h3",
+        text: "01. Research - Production Department"
+      },
+      {
+        type: "paragraph",
+        text: "Every project starts with market scoping, a structural thesis, and risk assessment - establishing whether an idea is worth building before any design or engineering time is spent on it."
+      },
+      {
+        type: "h3",
+        text: "02. Design - Creative Department"
+      },
+      {
+        type: "paragraph",
+        text: "Once a project clears research, it moves to design systems, interfaces, and motion blueprints - the visual and interaction layer gets defined before a single line of production code is written."
+      },
+      {
+        type: "h3",
+        text: "03. Build - Technology Department"
+      },
+      {
+        type: "paragraph",
+        text: "Architecture, engineering, and infrastructure coding turn the design into a working system - this is where the project actually gets built, hardened, and tested."
+      },
+      {
+        type: "h3",
+        text: "04. Launch - Release Function"
+      },
+      {
+        type: "paragraph",
+        text: "Launch is the step where the project reaches real users for the first time - the handoff from internal build to live product, coordinated so nothing ships before it's ready."
+      },
+      {
+        type: "h3",
+        text: "05. Run - Support Function"
+      },
+      {
+        type: "paragraph",
+        text: "Once live, a project doesn't stop needing attention - Run keeps the system fast, secure, and stable every day, on an ongoing basis rather than a one-time handoff."
+      },
+      {
+        type: "panel",
+        label: "Node // Build vs. Run",
+        subLabel: "Two Different Jobs",
+        columns: [
+          {
+            title: "Build (Step 03)",
+            text: "A finite job with an end point - the system exists and works by the time this step is done."
+          },
+          {
+            title: "Run (Step 05)",
+            text: "An ongoing job with no end point - the system has to keep working, every day, for as long as it's live."
+          }
+        ]
+      },
+      {
+        type: "h2",
+        text: "Why a fixed sequence matters more than flexibility"
+      },
+      {
+        type: "paragraph",
+        text: "The instinct at most companies is to treat process as something each project leader adapts on the fly. BricketX's model argues the opposite is usually better for a network operating across multiple regions and regulatory environments: a fixed sequence means every stakeholder - internal teams, investors, regulators - already knows what stage a project is at and what comes next, without needing a project-specific explanation. It also means a delay or issue is easier to diagnose, because there's a known step where it happened rather than an undocumented, improvised process to reconstruct after the fact."
+      },
+      {
+        type: "h2",
+        text: "The four pillars this process sits inside"
+      },
+      {
+        type: "paragraph",
+        text: "The operating model is one of four structural pillars that define how BricketX runs as a network - connectivity, methodology, coordination, and exploration each cover a different part of how the hub organizes itself:"
+      },
+      {
+        type: "image",
+        src: "/images/blog/idea-to-scale-operating-model/four-pillars-mandate.webp",
+        alt: "Four organizational pillars: connectivity, methodology, coordination, and exploration",
+        caption: "Fig. 02 - The operating model is one of four pillars that define how the hub runs"
+      },
+      {
+        type: "h2",
+        text: "What this looks like for an investor or partner"
+      },
+      {
+        type: "paragraph",
+        text: "For someone evaluating the network from the outside, a documented five-step process is a trust signal independent of any single project's outcome. It means a delay or a change in scope can be located to a specific step rather than attributed to a vague \"things came up,\" and it means every project - regardless of size - is going through the same governance-friendly sequence rather than a case-by-case exception process. That consistency is what \"zero variance\" looks like in practice: not that nothing ever changes, but that the path a change follows is always the same one."
+      },
+      {
+        type: "h2",
+        text: "Where new ideas actually start: the Innovation Lab"
+      },
+      {
+        type: "paragraph",
+        text: "Not every idea walks straight into Step 01. The Innovation Lab is where new products, AI experiments, and process improvements are tested before they're allowed to enter the network's main process at all - a filter that keeps untested ideas from consuming Research, Design, and Build resources before they've proven the underlying thesis holds up."
+      },
+      {
+        type: "image",
+        src: "/images/blog/idea-to-scale-operating-model/innovation-lab-funnel.webp",
+        alt: "Diagram showing a raw idea passing through the Innovation Lab for testing before entering step one of the main five-step process",
+        caption: "Fig. 03 - The Innovation Lab sits upstream of the five-step process, not inside it"
+      },
+      {
+        type: "h2",
+        text: "Frequently asked questions"
+      },
+      {
+        type: "faq",
+        items: [
+          {
+            question: "What is BricketX's idea-to-scale operating model?",
+            answer: "It's the fixed, five-step process every BricketX project moves through regardless of type or size - Research, Design, Build, Launch, and Run - each owned by a specific department, so a project follows the same deterministic path from first idea to a live system running in front of real users."
+          },
+          {
+            question: "What are the five steps in BricketX's operating model?",
+            answer: "Research (market scoping, structural thesis, risk assessment), Design (design systems, interfaces, motion blueprints), Build (architecture, engineering, infrastructure coding), Launch (bringing the project to real users), and Run (keeping the live system fast, secure, and stable)."
+          },
+          {
+            question: "Which department owns each step of the process?",
+            answer: "Research is owned by the Production department, Design by Creative, Build by Technology, Launch by the Release function, and Run by Support - one clear owner per step, rather than shared or ambiguous ownership."
+          },
+          {
+            question: "Why does BricketX use a fixed process instead of a flexible one per project?",
+            answer: "A fixed sequence makes outcomes more predictable, easier to audit, and faster to execute, because every team already knows the path a project will take before it starts - rather than re-negotiating process on every new initiative."
+          },
+          {
+            question: "What is the BricketX Innovation Lab and how does it relate to the operating model?",
+            answer: "The Innovation Lab is where new products, AI experiments, and process improvements are tested before they enter the network. Ideas that prove out in the lab are what feed into Step 01 of the main five-step process, rather than untested ideas going straight to production."
+          }
+        ]
+      },
+      {
+        type: "h2",
+        text: "The bottom line"
+      },
+      {
+        type: "paragraph",
+        text: "BricketX's operating model isn't a values statement - it's a documented, five-step sequence with a named owner at every stage: Research to Production, Design to Creative, Build to Technology, Launch to Release, Run to Support. That's what \"idea-to-scale, every time\" actually means in practice - not that every project turns out the same, but that every project gets there the same way."
+      }
+    ]
+  },
 ];
