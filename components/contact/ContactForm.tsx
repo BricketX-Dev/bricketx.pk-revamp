@@ -103,8 +103,11 @@ export default function ContactForm() {
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10 pt-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           
-          {/* Left Column: Official Coordinates & Directory */}
-          <div className="lg:col-span-4 flex flex-col gap-6 form-reveal">
+          {/* 
+            Left Column (Desktop) -> Moves to Bottom (Mobile)
+            The "order-2 lg:order-1" class handles the swap
+          */}
+          <div className="lg:col-span-4 flex flex-col gap-6 form-reveal order-2 lg:order-1">
             
             {/* Location Pane */}
             <div className="p-8 rounded-2xl bg-zinc-950 border border-zinc-800/80 shadow-2xl flex flex-col justify-between h-full relative overflow-hidden group">
@@ -158,8 +161,11 @@ export default function ContactForm() {
 
           </div>
 
-          {/* Right Column: Institutional Input Form */}
-          <div className="lg:col-span-8 form-reveal">
+          {/* 
+            Right Column (Desktop) -> Moves to Top (Mobile)
+            The "order-1 lg:order-2" class pulls the form up instantly under the hero on phones
+          */}
+          <div className="lg:col-span-8 form-reveal order-1 lg:order-2">
             <div className="bg-zinc-950 border border-zinc-800/80 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden min-h-[500px] flex flex-col justify-center">
               
               {/* Subtle top inner gradient line */}
