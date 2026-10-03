@@ -734,6 +734,8 @@ export const blogPosts: BlogPost[] = [
     ]
   },
 
+
+
 {
   slug: "brand-architecture-multi-region-companies",
   title: "Brand Architecture for Multi-Region Companies",
@@ -742,14 +744,9 @@ export const blogPosts: BlogPost[] = [
   date: "October 2, 2026",
   readTime: "9 min read",
   author: "Creative Desk",
-  featureImage: "/images/blog/brand-architecture-multi-region-companies/cover.webp",
+  featureImage: "/images/blog/brand-architecture-for-multi-region-companies/Featured-Image.webp",
   content: [
-    {
-      type: "image",
-      src: "/images/blog/brand-architecture-multi-region-companies/brand-architecture-layers.webp",
-      alt: "Three concentric rings showing brand architecture layers: fixed core, regional layer, and local-market layer",
-      caption: "Fig. 01 — What stays fixed at the core, and what's allowed to change moving outward"
-    },
+    
     {
       type: "paragraph",
       text: "Brand architecture for a multi-region company defines how one master brand and several regional identities relate to each other — which elements stay identical everywhere and which get a local layer. Get the balance wrong and a company either looks fragmented across markets or loses the local credibility a regional presence is supposed to build. BricketX's own structure — one brand, four regional hub identities, each named for what that region actually does — is a working example of how that balance gets built in practice."
@@ -785,9 +782,9 @@ export const blogPosts: BlogPost[] = [
     },
     {
       type: "image",
-      src: "/images/blog/brand-architecture-multi-region-companies/brand-hierarchy-tree.webp",
-      alt: "Brand hierarchy tree showing the master BricketX brand connected to four regional identities, each with a functional descriptor",
-      caption: "Fig. 02 — One master brand, four regions, each descriptor tied to a real function"
+      src: "/images/blog/brand-architecture-for-multi-region-companies/01.webp",
+      alt: "Three concentric rings showing brand architecture layers: fixed core, regional layer, and local-market layer",
+      caption: "Fig. 01 — What stays fixed at the core, and what's allowed to change moving outward"
     },
     {
       type: "paragraph",
@@ -850,9 +847,9 @@ export const blogPosts: BlogPost[] = [
     },
     {
       type: "image",
-      src: "/images/blog/brand-architecture-multi-region-companies/consistency-vs-localization.webp",
-      alt: "Comparison of what stays fixed everywhere versus what adapts by region in a brand architecture",
-      caption: "Fig. 03 — The same list every multi-region brand has to sort into two columns"
+      src: "/images/blog/brand-architecture-for-multi-region-companies/02.webp",
+      alt: "Brand hierarchy tree showing the master BricketX brand connected to four regional identities, each with a functional descriptor",
+      caption: "Fig. 02 — One master brand, four regions, each descriptor tied to a real function"
     },
     {
       type: "paragraph",
@@ -868,9 +865,9 @@ export const blogPosts: BlogPost[] = [
     },
     {
       type: "image",
-      src: "/images/blog/brand-architecture-multi-region-companies/single-source-guidelines.webp",
-      alt: "Diagram showing a single brand guidelines source distributed to four regional teams",
-      caption: "Fig. 04 — Every regional team pulls from the same source instead of redrawing the brand"
+      src: "/images/blog/brand-architecture-for-multi-region-companies/03.webp",
+      alt: "Comparison of what stays fixed everywhere versus what adapts by region in a brand architecture",
+      caption: "Fig. 03 — The same list every multi-region brand has to sort into two columns"
     },
     {
       type: "paragraph",
@@ -928,5 +925,7 @@ export const blogPosts: BlogPost[] = [
     }
   ]
 }
+
+
 
 ];
