@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useLayoutEffect } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
-// Extend Window interface for TypeScript
+
 declare global {
   interface Window {
     lenisInstance?: Lenis;
