@@ -135,10 +135,13 @@ export default function Footer() {
             </p>
 
             <div className="footer-reveal flex flex-col gap-3 font-mono text-xs text-zinc-500">
-              <div className="flex items-center gap-2.5 mt-2">
+              <a 
+                href="mailto:info@bricketx.pk" 
+                className="flex items-center gap-2.5 mt-2 hover:text-white transition-colors w-fit"
+              >
                 <Terminal size={14} className="text-[#C39967] shrink-0" />
                 <span>info@bricketx.pk</span>
-              </div>
+              </a>
             </div>
           </div>
 

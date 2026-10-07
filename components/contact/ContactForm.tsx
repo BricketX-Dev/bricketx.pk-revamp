@@ -137,11 +137,14 @@ export default function ContactForm() {
             </div>
 
             {/* Comms Pane */}
-            <div className="p-8 rounded-2xl bg-zinc-950 border border-zinc-800/80 shadow-2xl flex flex-col justify-between h-full relative overflow-hidden group">
+            <a 
+              href="mailto:info@bricketx.pk"
+              className="p-8 rounded-2xl bg-zinc-950 border border-zinc-800/80 shadow-2xl flex flex-col justify-between h-full relative overflow-hidden group cursor-pointer block focus:outline-none focus:ring-1 focus:ring-[#C39967]/50"
+            >
               <div className="absolute top-0 left-0 w-1 h-full bg-zinc-800 transition-colors group-hover:bg-[#C39967]" />
               
               <div className="flex items-center justify-between mb-10">
-                <div className="w-10 h-10 rounded border border-zinc-800 bg-zinc-900 flex items-center justify-center text-[#C39967]">
+                <div className="w-10 h-10 rounded border border-zinc-800 bg-zinc-900 flex items-center justify-center text-[#C39967] transition-transform group-hover:scale-110 duration-300">
                   <Mail size={18} />
                 </div>
               </div>
@@ -157,7 +160,7 @@ export default function ContactForm() {
                   Monitored 24/7 by the internal desk.
                 </p>
               </div>
-            </div>
+            </a>
 
           </div>
 
