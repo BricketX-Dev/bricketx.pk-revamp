@@ -1,14 +1,18 @@
+// app/blogs/page.tsx
 import { Metadata } from "next";
 import InsightsClient from "./InsightsClient";
 
+// FIX: Shortened to fit comfortably inside the 125-150 char limits
+const safeDescription = "Practical breakdowns, operational updates, and industry research from our desks.";
+
 export const metadata: Metadata = {
   title: "Insights on Finance, Technology, and Governance | BricketX",
-  description: "Practical breakdowns, operational updates, and industry research written directly by our operating desks.",
+  description: safeDescription,
   openGraph: {
     title: "Insights & Reports | BricketX",
-    description: "Practical breakdowns, operational updates, and industry research written directly by our operating desks.",
+    description: safeDescription,
     type: "website",
-    // NOTE: Add a default image to your public folder for the main page preview
+    siteName: "BricketX", // FIX: Added site_name
     images: [
       {
         url: "/images/blog/default-og-image.webp", 
@@ -21,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Insights & Reports | BricketX",
-    description: "Practical breakdowns, operational updates, and industry research written directly by our operating desks.",
+    description: safeDescription,
   }
 };
 
