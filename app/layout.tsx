@@ -41,6 +41,50 @@ export default function RootLayout({
           `}
         </Script>
         {/* End Google Tag Manager */}
+
+        {/* Global Opera / Chromium Background Video PiP Suppressor */}
+        <Script id="disable-video-pip" strategy="afterInteractive">
+          {`
+            (function() {
+              const sanitizeVideo = (v) => {
+                if (!v.hasAttribute('controls') && !v.classList.contains('interactive-video')) {
+                  v.disablePictureInPicture = true;
+                  v.setAttribute('disablepictureinpicture', '');
+                  v.setAttribute('controlslist', 'nodownload nofullscreen noremoteplayback');
+                }
+              };
+
+              const scanAllVideos = () => {
+                document.querySelectorAll('video').forEach(sanitizeVideo);
+              };
+
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', scanAllVideos);
+              } else {
+                scanAllVideos();
+              }
+
+              const observer = new MutationObserver((mutations) => {
+                for (const mutation of mutations) {
+                  for (const node of mutation.addedNodes) {
+                    if (node.nodeType === 1) {
+                      if (node.tagName === 'VIDEO') {
+                        sanitizeVideo(node);
+                      } else if (node.querySelectorAll) {
+                        node.querySelectorAll('video').forEach(sanitizeVideo);
+                      }
+                    }
+                  }
+                }
+              });
+
+              observer.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+              });
+            })();
+          `}
+        </Script>
       </head>
       
       <body className="bg-[#0a0a0b] text-white flex flex-col min-h-screen selection:bg-bricket-gold/30 selection:text-white">
