@@ -31,3 +31,16 @@ body {
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
 }
+
+/* Disable Opera Video Pop-out / Picture-in-Picture & hover controls on background videos */
+video {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+/* Allow mouse interaction if an intentional playable video element is present */
+video[controls],
+video.interactive-video {
+  pointer-events: auto !important;
+  user-select: auto !important;
+}
