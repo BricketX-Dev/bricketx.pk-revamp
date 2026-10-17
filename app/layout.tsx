@@ -42,36 +42,56 @@ export default function RootLayout({
         </Script>
         {/* End Google Tag Manager */}
 
-        {/* Global Opera / Chromium Background Video PiP Suppressor */}
-        <Script id="disable-video-pip" strategy="afterInteractive">
+        {/* Global Opera Video Pop-out & Lucid Mode Suppressor */}
+        <Script id="disable-opera-video-decorations" strategy="afterInteractive">
           {`
             (function() {
-              const sanitizeVideo = (v) => {
-                if (!v.hasAttribute('controls') && !v.classList.contains('interactive-video')) {
-                  v.disablePictureInPicture = true;
-                  v.setAttribute('disablepictureinpicture', '');
-                  v.setAttribute('controlslist', 'nodownload nofullscreen noremoteplayback');
-                }
-              };
+              const operaSelectors = [
+                '#detach-button-host',
+                '#lucid-mode-button',
+                'div[id*="lucid-mode"]',
+                'div[id*="detach-button"]',
+                'div[class*="lucid-mode"]',
+                'div[class*="video-popout"]'
+              ];
 
-              const scanAllVideos = () => {
-                document.querySelectorAll('video').forEach(sanitizeVideo);
+              const purgeOperaWidgets = () => {
+                operaSelectors.forEach(selector => {
+                  document.querySelectorAll(selector).forEach(el => el.remove());
+                });
+
+                document.querySelectorAll('video').forEach(v => {
+                  if (!v.hasAttribute('controls') && !v.classList.contains('interactive-video')) {
+                    v.disablePictureInPicture = true;
+                    v.setAttribute('disablepictureinpicture', '');
+                    v.setAttribute('controlslist', 'nodownload nofullscreen noremoteplayback');
+                  }
+                });
               };
 
               if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', scanAllVideos);
+                document.addEventListener('DOMContentLoaded', purgeOperaWidgets);
               } else {
-                scanAllVideos();
+                purgeOperaWidgets();
               }
 
               const observer = new MutationObserver((mutations) => {
                 for (const mutation of mutations) {
                   for (const node of mutation.addedNodes) {
                     if (node.nodeType === 1) {
-                      if (node.tagName === 'VIDEO') {
-                        sanitizeVideo(node);
-                      } else if (node.querySelectorAll) {
-                        node.querySelectorAll('video').forEach(sanitizeVideo);
+                      const id = node.id || '';
+                      const className = typeof node.className === 'string' ? node.className : '';
+                      
+                      if (
+                        id.includes('lucid-mode') ||
+                        id.includes('detach-button') ||
+                        className.includes('lucid-mode') ||
+                        className.includes('video-popout')
+                      ) {
+                        node.remove();
+                      } else if (node.tagName === 'VIDEO') {
+                        node.disablePictureInPicture = true;
+                        node.setAttribute('disablepictureinpicture', '');
                       }
                     }
                   }
@@ -86,7 +106,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      
+
       <body className="bg-[#0a0a0b] text-white flex flex-col min-h-screen selection:bg-bricket-gold/30 selection:text-white">
         {/* Google Tag Manager (noscript) */}
         <noscript>

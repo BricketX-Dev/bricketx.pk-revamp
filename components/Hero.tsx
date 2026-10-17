@@ -139,7 +139,7 @@ export default function Hero() {
       {/* Technical Background Grid */}
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_70%_at_50%_50%,#000_30%,transparent_100%)] z-10" />
 
-      {/* Full-Bleed 3D Render Video Loop */}
+{/* Full-Bleed 3D Render Video Loop */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <video
           ref={videoRef}
@@ -147,14 +147,21 @@ export default function Hero() {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-80 filter  contrast-125 will-change-transform"
+          disablePictureInPicture
+          controlsList="nodownload nofullscreen noremoteplayback"
+          tabIndex={-1}
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover opacity-80 filter contrast-125 will-change-transform pointer-events-none select-none -z-10"
         >
           <source src="/videos/home-hero.mp4" type="video/mp4" />
         </video>
         
+        {/* Transparent click/hover interceptor layer to block browser-injected widgets */}
+        <div className="absolute inset-0 z-10 bg-transparent pointer-events-auto" />
+
         {/* Soft edge gradients to ensure text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0b] via-[#0a0a0b]/60 to-transparent z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0b] via-transparent to-[#0a0a0b]/60 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0b] via-[#0a0a0b]/60 to-transparent z-20 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0b] via-transparent to-[#0a0a0b]/60 z-20 pointer-events-none" />
       </div>
 
       {/* Top Navbar Spacer */}

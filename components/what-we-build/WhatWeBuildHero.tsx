@@ -106,7 +106,7 @@ export default function WhatWeBuildHero() {
       onMouseMove={handleMouseMove}
       className="relative min-h-[90vh] md:min-h-[95vh] w-full flex flex-col justify-center pt-36 pb-24 md:pt-44 md:pb-32 bg-[#0a0a0b] text-[#f4f4f5] border-b border-zinc-800/80 overflow-hidden select-none"
     >
-      {/* 3D Render Background Video Layer */}
+{/* 3D Render Background Video Layer */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <video
           ref={videoRef}
@@ -114,14 +114,21 @@ export default function WhatWeBuildHero() {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-40 filter contrast-125 will-change-transform"
+          disablePictureInPicture
+          controlsList="nodownload nofullscreen noremoteplayback"
+          tabIndex={-1}
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover opacity-40 filter contrast-125 will-change-transform pointer-events-none select-none -z-10"
         >
           <source src="/videos/what-we-build-hero.mp4" type="video/mp4" />
         </video>
 
+        {/* Transparent click/hover interceptor layer to block browser-injected widgets */}
+        <div className="absolute inset-0 z-10 bg-transparent pointer-events-auto" />
+
         {/* Soft edge gradients to ensure text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0b] via-[#0a0a0b]/75 to-transparent z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0b] via-transparent to-[#0a0a0b]/80 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0b] via-[#0a0a0b]/75 to-transparent z-20 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0b] via-transparent to-[#0a0a0b]/80 z-20 pointer-events-none" />
       </div>
 
       {/* Dynamic Cursor Spotlight */}

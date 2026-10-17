@@ -32,13 +32,34 @@ body {
   overflow-x: hidden;
 }
 
-/* Disable Opera Video Pop-out / Picture-in-Picture & hover controls on background videos */
+/* --------------------------------------------------------------------------
+   Opera Lucid Mode & Video Pop-Out Suppressor
+   -------------------------------------------------------------------------- */
+#detach-button-host,
+#lucid-mode-button,
+div[id*="lucid-mode"],
+div[id*="detach-button"],
+div[class*="lucid-mode"],
+div[class*="video-popout"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  max-width: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  z-index: -99999 !important;
+}
+
+/* Strip mouse tracking on background video elements */
 video {
   pointer-events: none !important;
   user-select: none !important;
 }
 
-/* Allow mouse interaction if an intentional playable video element is present */
+/* Allow interaction if an intentional playback video is placed */
 video[controls],
 video.interactive-video {
   pointer-events: auto !important;
